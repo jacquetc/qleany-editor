@@ -1,0 +1,6 @@
+add_subdirectory(root_feature)
+add_subdirectory(recent_project_feature)
+add_subdirectory(project_feature)
+add_subdirectory(global_component_feature)
+add_subdirectory(entity_component_feature)
+add_subdirectory(entity_feature)

@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    auto config = qleany - editorConfig::self();
+    auto config = QleanyEditorConfig::self();
 
     qmlRegisterSingletonInstance("org.kde.qleany-editor.private", 1, 0, "Config", config);
 

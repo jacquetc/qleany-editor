@@ -7,14 +7,20 @@ qt_add_qml_module(qleany-editor_static
     URI org.kde.qleany-editor
     VERSION 1.0
     QML_FILES
-        contents/ui/Main.qml
-        contents/ui/About.qml
+    contents/ui/Main.qml
+    contents/ui/About.qml
 )
 
 target_sources(qleany-editor_static PUBLIC
     app.cpp
 )
+qcoro_enable_coroutines()
 
+target_link_libraries(qleany-editor_static PUBLIC qleany-editor-entities)
+target_link_libraries(qleany-editor_static PUBLIC qleany-editor-persistence)
+target_link_libraries(qleany-editor_static PUBLIC qleany-editor-interactor)
+target_link_libraries(qleany-editor_static PUBLIC qleany-editor-presenter)
+target_link_libraries(qleany-editor_static PRIVATE QCoro::Core QCoro::Qml)
 target_link_libraries(qleany-editor_static PUBLIC
     Qt6::Core
     Qt6::Gui
@@ -22,6 +28,7 @@ target_link_libraries(qleany-editor_static PUBLIC
     Qt6::Quick
     Qt6::QuickControls2
     Qt6::Svg
+    Qt6::Concurrent
     KF6::I18n
     KF6::CoreAddons
     KF6::ConfigCore
@@ -29,7 +36,9 @@ target_link_libraries(qleany-editor_static PUBLIC
 )
 target_include_directories(qleany-editor_static PUBLIC ${CMAKE_BINARY_DIR})
 
-if (ANDROID)
+include(${CMAKE_CURRENT_SOURCE_DIR}/realqmlmodules.cmake)
+
+if(ANDROID)
     kirigami_package_breeze_icons(ICONS
         list-add
         help-about

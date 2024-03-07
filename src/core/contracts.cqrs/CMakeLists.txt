@@ -1,0 +1,6 @@
+add_subdirectory(root_cqrs)
+add_subdirectory(recent_project_cqrs)
+add_subdirectory(project_cqrs)
+add_subdirectory(global_component_cqrs)
+add_subdirectory(entity_component_cqrs)
+add_subdirectory(entity_cqrs)

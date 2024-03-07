@@ -1,0 +1,19 @@
+# This file was generated automatically by Qleany's generator, edit at your own risk! 
+# If you do, be careful to not overwrite it when you run the generator again.
+Module Interactors
+singleton RootInteractor 1.0 RootInteractor.qml
+singleton RootSignals 1.0 RootSignals.qml
+singleton RecentProjectInteractor 1.0 RecentProjectInteractor.qml
+singleton RecentProjectSignals 1.0 RecentProjectSignals.qml
+singleton ProjectInteractor 1.0 ProjectInteractor.qml
+singleton ProjectSignals 1.0 ProjectSignals.qml
+singleton GlobalComponentInteractor 1.0 GlobalComponentInteractor.qml
+singleton GlobalComponentSignals 1.0 GlobalComponentSignals.qml
+singleton EntityComponentInteractor 1.0 EntityComponentInteractor.qml
+singleton EntityComponentSignals 1.0 EntityComponentSignals.qml
+singleton EntityInteractor 1.0 EntityInteractor.qml
+singleton EntitySignals 1.0 EntitySignals.qml
+singleton ProgressSignals 1.0 ProgressSignals.qml
+singleton ErrorSignals 1.0 ErrorSignals.qml
+singleton EventDispatcher 1.0 EventDispatcher.qml
+QCoroQmlTask 1.0 QCoroQmlTask.qml
