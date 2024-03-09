@@ -22,6 +22,9 @@
 #include <KLocalizedContext>
 #include <KLocalizedString>
 
+#include "entities_registration.h"
+#include "interactor_registration.h"
+#include "persistence_registration.h"
 #include "qleany-editorconfig.h"
 
 using namespace Qt::Literals::StringLiterals;
@@ -36,6 +39,10 @@ int main(int argc, char *argv[])
     QQuickStyle::setStyle(QStringLiteral("org.kde.breeze"));
 #else
     QApplication app(argc, argv);
+
+    new QleanyEditor::Entities::EntitiesRegistration(&app);
+    auto *persistenceRegistration = new QleanyEditor::Persistence::PersistenceRegistration(&app);
+    new QleanyEditor::Interactor::InteractorRegistration(&app, persistenceRegistration->repositoryProvider());
 
     // Default to org.kde.desktop style unless the user forces another style
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
@@ -80,10 +87,10 @@ int main(int argc, char *argv[])
 
     auto config = QleanyEditorConfig::self();
 
-    qmlRegisterSingletonInstance("org.kde.qleany-editor.private", 1, 0, "Config", config);
+    qmlRegisterSingletonInstance("org.kde.qleanyeditor.private", 1, 0, "Config", config);
 
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
-    engine.loadFromModule("org.kde.qleany-editor", u"Main.qml");
+    engine.loadFromModule("org.kde.qleanyeditor", u"Main.qml");
 
     if (engine.rootObjects().isEmpty()) {
         return -1;
