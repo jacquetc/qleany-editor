@@ -40,11 +40,11 @@ public:
 public Q_SLOTS:
 
     QCoro::Task<> loadProject(LoadProjectDTO dto);
-
+    LoadProjectDTO getLoadProjectDTO();
     QCoro::Task<> saveProject(SaveProjectDTO dto);
-
+    SaveProjectDTO getSaveProjectDTO();
     QCoro::Task<> createProject(CreateProjectDTO dto);
-
+    CreateProjectDTO getCreateProjectDTO();
     QCoro::Task<> closeProject();
 
 private:

@@ -13,8 +13,8 @@ qt6_add_qml_module(${PLUGIN_NAME}
     RESOURCE_PREFIX "/models"
     SOURCES
     
-    foreign_recent_project_list_model_model.h
-    foreign_entity_list_model_from_entity_component_entities_model.h
+    foreign_recent_project_list_model.h
+    foreign_entity_list_model_from_entity_component_entities.h
 
 )
 

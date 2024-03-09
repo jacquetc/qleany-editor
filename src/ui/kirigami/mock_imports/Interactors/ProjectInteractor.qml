@@ -23,7 +23,7 @@ QtObject {
 
 
     function loadProject(dto) {
-        // change this function to return the correct signal name, dto in and dto out
+        // TODO: change this dict below to conform to the command's dto out
         var reply_dto = {
             "id": 0,
             "content": ""
@@ -36,6 +36,7 @@ QtObject {
             task.setValue(reply_dto);
             task.setDelay(50);
             task.setSignalFn(function(){
+            // TODO: change this signal name to the correct one
                 EventDispatcher.project().loadProjectChanged(reply_dto);
             })
         }
@@ -43,9 +44,20 @@ QtObject {
         return task
     }
 
+    
+    function getLoadProjectDTO() {
+    // TODO: change this dict below to conform to the command's dto in
+        return {
+            "id": 0,
+            "content": ""
+        }
+    }
+    
+
+
 
     function saveProject(dto) {
-        // change this function to return the correct signal name, dto in and dto out
+        // TODO: change this dict below to conform to the command's dto out
         var reply_dto = {
             "id": 0,
             "content": ""
@@ -58,6 +70,7 @@ QtObject {
             task.setValue(reply_dto);
             task.setDelay(50);
             task.setSignalFn(function(){
+            // TODO: change this signal name to the correct one
                 EventDispatcher.project().saveProjectChanged(reply_dto);
             })
         }
@@ -65,9 +78,20 @@ QtObject {
         return task
     }
 
+    
+    function getSaveProjectDTO() {
+    // TODO: change this dict below to conform to the command's dto in
+        return {
+            "id": 0,
+            "content": ""
+        }
+    }
+    
+
+
 
     function createProject(dto) {
-        // change this function to return the correct signal name, dto in and dto out
+        // TODO: change this dict below to conform to the command's dto out
         var reply_dto = {
             "id": 0,
             "content": ""
@@ -80,6 +104,7 @@ QtObject {
             task.setValue(reply_dto);
             task.setDelay(50);
             task.setSignalFn(function(){
+            // TODO: change this signal name to the correct one
                 EventDispatcher.project().createProjectChanged(reply_dto);
             })
         }
@@ -87,9 +112,20 @@ QtObject {
         return task
     }
 
+    
+    function getCreateProjectDTO() {
+    // TODO: change this dict below to conform to the command's dto in
+        return {
+            "id": 0,
+            "content": ""
+        }
+    }
+    
+
+
 
     function closeProject(dto) {
-        // change this function to return the correct signal name, dto in and dto out
+        // TODO: change this dict below to conform to the command's dto out
         var reply_dto = {
             "id": 0,
             "content": ""
@@ -102,12 +138,16 @@ QtObject {
             task.setValue(reply_dto);
             task.setDelay(50);
             task.setSignalFn(function(){
+            // TODO: change this signal name to the correct one
                 EventDispatcher.project().closeProjectChanged(reply_dto);
             })
         }
 
         return task
     }
+
+    
+
 
 
 }

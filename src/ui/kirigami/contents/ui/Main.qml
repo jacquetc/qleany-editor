@@ -6,6 +6,7 @@ import QtQuick.Controls as Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import Interactors
+import org.kde.qleanyeditor
 
 Kirigami.ApplicationWindow {
     id: root
@@ -15,14 +16,14 @@ Kirigami.ApplicationWindow {
     minimumWidth: Kirigami.Units.gridUnit * 20
     minimumHeight: Kirigami.Units.gridUnit * 20
 
-    onClosing: root.saveWindowGeometry(root)
+    onClosing: App.saveWindowGeometry(root)
 
     onWidthChanged: saveWindowGeometryTimer.restart()
     onHeightChanged: saveWindowGeometryTimer.restart()
     onXChanged: saveWindowGeometryTimer.restart()
     onYChanged: saveWindowGeometryTimer.restart()
 
-    Component.onCompleted: root.restoreWindowGeometry(root)
+    Component.onCompleted: App.restoreWindowGeometry(root)
 
     // This timer allows to batch update the window size change to reduce
     // the io load and also work around the fact that x/y/width/height are
@@ -44,7 +45,9 @@ Kirigami.ApplicationWindow {
                 icon.name: "list-add"
                 onTriggered: {
                     console.log("eee")
-                    ProjectInteractor.loadProject(loadProjectDTO)
+                    var dto = ProjectInteractor.getLoadProjectDTO()
+                    dto.fileName = ""
+                    ProjectInteractor.loadProject(dto)
                     console.log("eee")
 }
 

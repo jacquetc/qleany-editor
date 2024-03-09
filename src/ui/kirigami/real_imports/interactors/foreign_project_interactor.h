@@ -31,14 +31,29 @@ public:
         return s_interactorInstance->loadProject(dto);
     }
 
+    Q_INVOKABLE LoadProjectDTO getLoadProjectDTO()
+    {
+        return s_interactorInstance->getLoadProjectDTO();
+    }
+
     Q_INVOKABLE QCoro::QmlTask saveProject(SaveProjectDTO dto)
     {
         return s_interactorInstance->saveProject(dto);
     }
 
+    Q_INVOKABLE SaveProjectDTO getSaveProjectDTO()
+    {
+        return s_interactorInstance->getSaveProjectDTO();
+    }
+
     Q_INVOKABLE QCoro::QmlTask createProject(CreateProjectDTO dto)
     {
         return s_interactorInstance->createProject(dto);
+    }
+
+    Q_INVOKABLE CreateProjectDTO getCreateProjectDTO()
+    {
+        return s_interactorInstance->getCreateProjectDTO();
     }
 
     Q_INVOKABLE QCoro::QmlTask closeProject()

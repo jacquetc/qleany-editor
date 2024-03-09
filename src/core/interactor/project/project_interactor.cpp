@@ -108,6 +108,11 @@ QCoro::Task<> ProjectInteractor::loadProject(LoadProjectDTO dto)
     co_return;
 }
 
+LoadProjectDTO ProjectInteractor::getLoadProjectDTO()
+{
+    return LoadProjectDTO();
+}
+
 QCoro::Task<> ProjectInteractor::saveProject(SaveProjectDTO dto)
 {
     SaveProjectCommand query;
@@ -139,6 +144,11 @@ QCoro::Task<> ProjectInteractor::saveProject(SaveProjectDTO dto)
     co_return;
 }
 
+SaveProjectDTO ProjectInteractor::getSaveProjectDTO()
+{
+    return SaveProjectDTO();
+}
+
 QCoro::Task<> ProjectInteractor::createProject(CreateProjectDTO dto)
 {
     CreateProjectCommand query;
@@ -168,6 +178,11 @@ QCoro::Task<> ProjectInteractor::createProject(CreateProjectDTO dto)
     m_undo_redo_system->push(command, "project"_L1);
 
     co_return;
+}
+
+CreateProjectDTO ProjectInteractor::getCreateProjectDTO()
+{
+    return CreateProjectDTO();
 }
 
 QCoro::Task<> ProjectInteractor::closeProject()
