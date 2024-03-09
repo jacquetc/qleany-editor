@@ -12,6 +12,7 @@ using namespace QleanyEditor::Contracts::DTO::GlobalComponent;
 
 namespace QleanyEditor::Contracts::DTO::Project
 {
+using namespace Qt::Literals::StringLiterals;
 
 class ProjectWithDetailsDTO
 {
@@ -34,22 +35,22 @@ public:
         bool globalComponentSet = false;
         bool getSet(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("id")) {
+            if (fieldName == "id"_L1) {
                 return idSet;
             }
-            if (fieldName == QString::fromUtf8("uuid")) {
+            if (fieldName == "uuid"_L1) {
                 return uuidSet;
             }
-            if (fieldName == QString::fromUtf8("creationDate")) {
+            if (fieldName == "creationDate"_L1) {
                 return creationDateSet;
             }
-            if (fieldName == QString::fromUtf8("updateDate")) {
+            if (fieldName == "updateDate"_L1) {
                 return updateDateSet;
             }
-            if (fieldName == QString::fromUtf8("fileName")) {
+            if (fieldName == "fileName"_L1) {
                 return fileNameSet;
             }
-            if (fieldName == QString::fromUtf8("globalComponent")) {
+            if (fieldName == "globalComponent"_L1) {
                 return globalComponentSet;
             }
             return false;

@@ -9,6 +9,7 @@
 
 namespace QleanyEditor::Contracts::DTO::GlobalComponent
 {
+using namespace Qt::Literals::StringLiterals;
 
 class GlobalComponentDTO
 {
@@ -35,28 +36,28 @@ public:
         bool organisationDomainSet = false;
         bool getSet(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("id")) {
+            if (fieldName == "id"_L1) {
                 return idSet;
             }
-            if (fieldName == QString::fromUtf8("uuid")) {
+            if (fieldName == "uuid"_L1) {
                 return uuidSet;
             }
-            if (fieldName == QString::fromUtf8("creationDate")) {
+            if (fieldName == "creationDate"_L1) {
                 return creationDateSet;
             }
-            if (fieldName == QString::fromUtf8("updateDate")) {
+            if (fieldName == "updateDate"_L1) {
                 return updateDateSet;
             }
-            if (fieldName == QString::fromUtf8("applicationName")) {
+            if (fieldName == "applicationName"_L1) {
                 return applicationNameSet;
             }
-            if (fieldName == QString::fromUtf8("applicationCppDomainName")) {
+            if (fieldName == "applicationCppDomainName"_L1) {
                 return applicationCppDomainNameSet;
             }
-            if (fieldName == QString::fromUtf8("organisationName")) {
+            if (fieldName == "organisationName"_L1) {
                 return organisationNameSet;
             }
-            if (fieldName == QString::fromUtf8("organisationDomain")) {
+            if (fieldName == "organisationDomain"_L1) {
                 return organisationDomainSet;
             }
             return false;

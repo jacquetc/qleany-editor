@@ -37,7 +37,7 @@ RootInteractor *RootInteractor::instance()
 
 QCoro::Task<RootDTO> RootInteractor::get(int id) const
 {
-    auto queryCommand = new QueryCommand("get");
+    auto queryCommand = new QueryCommand("get"_L1);
 
     queryCommand->setQueryFunction([this, id](QPromise<Result<void>> &progressPromise) {
         GetRootQuery query;
@@ -47,12 +47,12 @@ QCoro::Task<RootDTO> RootInteractor::get(int id) const
         auto result = handler.handle(progressPromise, query);
 
         if (result.isSuccess()) {
-            emit m_eventDispatcher->root()->getReplied(result.value());
+            Q_EMIT m_eventDispatcher->root()->getReplied(result.value());
         }
         return Result<void>(result.error());
     });
 
-    m_undo_redo_system->push(queryCommand, "root");
+    m_undo_redo_system->push(queryCommand, "root"_L1);
 
     // async wait for result signal
     const std::optional<RootDTO> optional_result = co_await qCoro(m_eventDispatcher->root(), &RootSignals::getReplied, std::chrono::milliseconds(1000));

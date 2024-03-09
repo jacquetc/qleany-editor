@@ -28,7 +28,7 @@ public:
 
     Result<void> restore();
 
-signals:
+Q_SIGNALS:
 
     void closeProjectChanged();
 

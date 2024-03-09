@@ -54,8 +54,8 @@ Result<void> CloseProjectCommandHandler::handleImpl(QPromise<Result<void>> &prog
 
     m_projectRepository->saveChanges();
 
-    // emit signal
-    // emit closeProjectChanged();
+    // Q_EMIT signal
+    // Q_EMIT closeProjectChanged();
 
     // Return
     return Result<void>();

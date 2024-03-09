@@ -50,16 +50,16 @@ public:
 
         bool getSet(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("content")) {
+            if (fieldName == "content"_L1) {
                 return true;
             }
-            if (fieldName == QString::fromUtf8("rootPath")) {
+            if (fieldName == "rootPath"_L1) {
                 return true;
             }
-            if (fieldName == QString::fromUtf8("recentProjects")) {
+            if (fieldName == "recentProjects"_L1) {
                 return recentProjectsSet;
             }
-            if (fieldName == QString::fromUtf8("project")) {
+            if (fieldName == "project"_L1) {
                 return projectSet;
             }
             return m_entity->CommonParent::metaData().getSet(fieldName);
@@ -67,16 +67,16 @@ public:
 
         bool getLoaded(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("content")) {
+            if (fieldName == "content"_L1) {
                 return true;
             }
-            if (fieldName == QString::fromUtf8("rootPath")) {
+            if (fieldName == "rootPath"_L1) {
                 return true;
             }
-            if (fieldName == QString::fromUtf8("recentProjects")) {
+            if (fieldName == "recentProjects"_L1) {
                 return recentProjectsLoaded;
             }
-            if (fieldName == QString::fromUtf8("project")) {
+            if (fieldName == "project"_L1) {
                 return projectLoaded;
             }
             return m_entity->CommonParent::metaData().getLoaded(fieldName);
@@ -88,9 +88,9 @@ public:
 
     Root()
         : CommonParent()
+        , m_metaData(this)
         , m_content(QString())
         , m_rootPath(QString())
-        , m_metaData(this)
     {
     }
 
@@ -107,11 +107,11 @@ public:
          const QList<RecentProject> &recentProjects,
          const Project &project)
         : CommonParent(id, uuid, creationDate, updateDate)
+        , m_metaData(this)
         , m_content(content)
         , m_rootPath(rootPath)
         , m_recentProjects(recentProjects)
         , m_project(project)
-        , m_metaData(this)
     {
     }
 
@@ -265,37 +265,37 @@ inline uint qHash(const Root &entity, uint seed = 0) noexcept
 
 /// Schema for Root entity
 inline Qleany::Entities::EntitySchema Root::schema = {QleanyEditor::Entities::Entities::EntityEnum::Root,
-                                                      QString::fromUtf8("Root"),
+                                                      "Root"_L1,
 
                                                       // relationships:
                                                       {{QleanyEditor::Entities::Entities::EntityEnum::Root,
-                                                        QString::fromUtf8("Root"),
+                                                        "Root"_L1,
                                                         QleanyEditor::Entities::Entities::EntityEnum::RecentProject,
-                                                        QString::fromUtf8("RecentProject"),
-                                                        QString::fromUtf8("recentProjects"),
+                                                        "RecentProject"_L1,
+                                                        "recentProjects"_L1,
                                                         RelationshipType::OneToMany,
                                                         RelationshipStrength::Strong,
                                                         RelationshipCardinality::ManyUnordered,
                                                         RelationshipDirection::Forward},
                                                        {QleanyEditor::Entities::Entities::EntityEnum::Root,
-                                                        QString::fromUtf8("Root"),
+                                                        "Root"_L1,
                                                         QleanyEditor::Entities::Entities::EntityEnum::Project,
-                                                        QString::fromUtf8("Project"),
-                                                        QString::fromUtf8("project"),
+                                                        "Project"_L1,
+                                                        "project"_L1,
                                                         RelationshipType::OneToOne,
                                                         RelationshipStrength::Strong,
                                                         RelationshipCardinality::One,
                                                         RelationshipDirection::Forward}},
 
                                                       // fields:
-                                                      {{QString::fromUtf8("id"), FieldType::Integer, true, false},
-                                                       {QString::fromUtf8("uuid"), FieldType::Uuid, false, false},
-                                                       {QString::fromUtf8("creationDate"), FieldType::DateTime, false, false},
-                                                       {QString::fromUtf8("updateDate"), FieldType::DateTime, false, false},
-                                                       {QString::fromUtf8("content"), FieldType::String, false, false},
-                                                       {QString::fromUtf8("rootPath"), FieldType::String, false, false},
-                                                       {QString::fromUtf8("recentProjects"), FieldType::Entity, false, true},
-                                                       {QString::fromUtf8("project"), FieldType::Entity, false, true}}};
+                                                      {{"id"_L1, FieldType::Integer, true, false},
+                                                       {"uuid"_L1, FieldType::Uuid, false, false},
+                                                       {"creationDate"_L1, FieldType::DateTime, false, false},
+                                                       {"updateDate"_L1, FieldType::DateTime, false, false},
+                                                       {"content"_L1, FieldType::String, false, false},
+                                                       {"rootPath"_L1, FieldType::String, false, false},
+                                                       {"recentProjects"_L1, FieldType::Entity, false, true},
+                                                       {"project"_L1, FieldType::Entity, false, true}}};
 
 } // namespace QleanyEditor::Entities
 Q_DECLARE_METATYPE(QleanyEditor::Entities::Root)

@@ -25,8 +25,8 @@ public:
     Result<int> handle(QPromise<Result<void>> &progressPromise, const RemoveRecentProjectCommand &request);
     Result<int> restore();
 
-signals:
-    // repositories handle remove signals
+Q_SIGNALS:
+    // repositories handle remove Q_SIGNALS
     // void recentProjectRemoved(int id);
 
 private:

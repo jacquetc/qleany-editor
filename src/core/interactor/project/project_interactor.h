@@ -37,7 +37,7 @@ public:
 
     Q_INVOKABLE QCoro::Task<ProjectDTO> get(int id) const;
 
-public slots:
+public Q_SLOTS:
 
     QCoro::Task<> loadProject(LoadProjectDTO dto);
 

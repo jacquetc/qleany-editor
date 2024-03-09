@@ -14,6 +14,7 @@ using namespace QleanyEditor::Contracts::DTO::Project;
 
 namespace QleanyEditor::Contracts::DTO::Root
 {
+using namespace Qt::Literals::StringLiterals;
 
 class RootWithDetailsDTO
 {
@@ -40,28 +41,28 @@ public:
         bool projectSet = false;
         bool getSet(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("id")) {
+            if (fieldName == "id"_L1) {
                 return idSet;
             }
-            if (fieldName == QString::fromUtf8("uuid")) {
+            if (fieldName == "uuid"_L1) {
                 return uuidSet;
             }
-            if (fieldName == QString::fromUtf8("creationDate")) {
+            if (fieldName == "creationDate"_L1) {
                 return creationDateSet;
             }
-            if (fieldName == QString::fromUtf8("updateDate")) {
+            if (fieldName == "updateDate"_L1) {
                 return updateDateSet;
             }
-            if (fieldName == QString::fromUtf8("content")) {
+            if (fieldName == "content"_L1) {
                 return contentSet;
             }
-            if (fieldName == QString::fromUtf8("rootPath")) {
+            if (fieldName == "rootPath"_L1) {
                 return rootPathSet;
             }
-            if (fieldName == QString::fromUtf8("recentProjects")) {
+            if (fieldName == "recentProjects"_L1) {
                 return recentProjectsSet;
             }
-            if (fieldName == QString::fromUtf8("project")) {
+            if (fieldName == "project"_L1) {
                 return projectSet;
             }
             return false;

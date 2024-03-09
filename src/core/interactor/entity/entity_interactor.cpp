@@ -44,7 +44,7 @@ EntityInteractor *EntityInteractor::instance()
 
 QCoro::Task<EntityDTO> EntityInteractor::get(int id) const
 {
-    auto queryCommand = new QueryCommand("get");
+    auto queryCommand = new QueryCommand("get"_L1);
 
     queryCommand->setQueryFunction([this, id](QPromise<Result<void>> &progressPromise) {
         GetEntityQuery query;
@@ -54,12 +54,12 @@ QCoro::Task<EntityDTO> EntityInteractor::get(int id) const
         auto result = handler.handle(progressPromise, query);
 
         if (result.isSuccess()) {
-            emit m_eventDispatcher->entity()->getReplied(result.value());
+            Q_EMIT m_eventDispatcher->entity()->getReplied(result.value());
         }
         return Result<void>(result.error());
     });
 
-    m_undo_redo_system->push(queryCommand, "entity");
+    m_undo_redo_system->push(queryCommand, "entity"_L1);
 
     // async wait for result signal
     const std::optional<EntityDTO> optional_result = co_await qCoro(m_eventDispatcher->entity(), &EntitySignals::getReplied, std::chrono::milliseconds(1000));
@@ -87,22 +87,22 @@ QCoro::Task<EntityDTO> EntityInteractor::create(const CreateEntityDTO &dto)
 
     QObject::connect(handler, &CreateEntityCommandHandler::relationWithOwnerInserted, this, [this](int id, int ownerId, int position) {
         auto dto = EntityComponentRelationDTO(ownerId, EntityComponentRelationDTO::RelationField::Entities, QList<int>() << id, position);
-        emit m_eventDispatcher->entityComponent()->relationInserted(dto);
+        Q_EMIT m_eventDispatcher->entityComponent()->relationInserted(dto);
     });
     QObject::connect(handler, &CreateEntityCommandHandler::relationWithOwnerRemoved, this, [this](int id, int ownerId) {
         auto dto = EntityComponentRelationDTO(ownerId, EntityComponentRelationDTO::RelationField::Entities, QList<int>() << id, -1);
-        emit m_eventDispatcher->entityComponent()->relationRemoved(dto);
+        Q_EMIT m_eventDispatcher->entityComponent()->relationRemoved(dto);
     });
 
     QObject::connect(handler, &CreateEntityCommandHandler::entityRemoved, this, [this](int removedId) {
-        emit m_eventDispatcher->entity()->removed(QList<int>() << removedId);
+        Q_EMIT m_eventDispatcher->entity()->removed(QList<int>() << removedId);
     });
 
     // Create specialized UndoRedoCommand
     auto command = new AlterCommand<CreateEntityCommandHandler, CreateEntityCommand>(EntityInteractor::tr("Create entity"), handler, query);
 
     // push command
-    m_undo_redo_system->push(command, "entity");
+    m_undo_redo_system->push(command, "entity"_L1);
 
     // async wait for result signal
     const std::optional<EntityDTO> optional_result = co_await qCoro(handler, &CreateEntityCommandHandler::entityCreated, std::chrono::milliseconds(1000));
@@ -126,7 +126,7 @@ QCoro::Task<EntityDTO> EntityInteractor::update(const UpdateEntityDTO &dto)
 
     // connect
     QObject::connect(handler, &UpdateEntityCommandHandler::entityUpdated, this, [this](EntityDTO dto) {
-        emit m_eventDispatcher->entity()->updated(dto);
+        Q_EMIT m_eventDispatcher->entity()->updated(dto);
     });
     QObject::connect(handler, &UpdateEntityCommandHandler::entityDetailsUpdated, m_eventDispatcher->entity(), &EntitySignals::allRelationsInvalidated);
 
@@ -134,7 +134,7 @@ QCoro::Task<EntityDTO> EntityInteractor::update(const UpdateEntityDTO &dto)
     auto command = new AlterCommand<UpdateEntityCommandHandler, UpdateEntityCommand>(EntityInteractor::tr("Update entity"), handler, query);
 
     // push command
-    m_undo_redo_system->push(command, "entity");
+    m_undo_redo_system->push(command, "entity"_L1);
 
     // async wait for result signal
     const std::optional<EntityDTO> optional_result = co_await qCoro(handler, &UpdateEntityCommandHandler::entityUpdated, std::chrono::milliseconds(1000));
@@ -163,7 +163,7 @@ QCoro::Task<bool> EntityInteractor::remove(int id)
     auto command = new AlterCommand<RemoveEntityCommandHandler, RemoveEntityCommand>(EntityInteractor::tr("Remove entity"), handler, query);
 
     // push command
-    m_undo_redo_system->push(command, "entity");
+    m_undo_redo_system->push(command, "entity"_L1);
 
     // async wait for result signal
     const std::optional<QList<int>> optional_result = co_await qCoro(repository->signalHolder(), &SignalHolder::removed, std::chrono::milliseconds(1000));

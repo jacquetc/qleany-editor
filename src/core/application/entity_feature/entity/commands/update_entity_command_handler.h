@@ -26,7 +26,7 @@ public:
     Result<EntityDTO> handle(QPromise<Result<void>> &progressPromise, const UpdateEntityCommand &request);
     Result<EntityDTO> restore();
 
-signals:
+Q_SIGNALS:
     void entityUpdated(QleanyEditor::Contracts::DTO::Entity::EntityDTO entityDto);
     void entityDetailsUpdated(int id);
 

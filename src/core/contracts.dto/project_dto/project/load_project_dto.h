@@ -7,6 +7,7 @@
 
 namespace QleanyEditor::Contracts::DTO::Project
 {
+using namespace Qt::Literals::StringLiterals;
 
 class LoadProjectDTO
 {
@@ -19,7 +20,7 @@ public:
         bool fileNameSet = false;
         bool getSet(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("fileName")) {
+            if (fieldName == "fileName"_L1) {
                 return fileNameSet;
             }
             return false;

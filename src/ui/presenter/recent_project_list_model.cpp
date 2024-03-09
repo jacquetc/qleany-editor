@@ -35,7 +35,7 @@ RecentProjectListModel::RecentProjectListModel(QObject *parent)
             if (m_recentProjectList.at(i).id() == dto.id()) {
                 m_recentProjectList[i] = dto;
                 m_recentProjectIdList[i] = dto.id();
-                emit dataChanged(index(i), index(i));
+                Q_EMIT dataChanged(index(i), index(i));
                 break;
             }
         }

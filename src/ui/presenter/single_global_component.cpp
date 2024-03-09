@@ -19,35 +19,35 @@ SingleGlobalComponent::SingleGlobalComponent(QObject *parent)
         if (dto.id() == id()) {
             if (m_id != dto.id()) {
                 m_id = dto.id();
-                emit idChanged();
+                Q_EMIT idChanged();
             }
             if (m_uuid != dto.uuid()) {
                 m_uuid = dto.uuid();
-                emit uuidChanged();
+                Q_EMIT uuidChanged();
             }
             if (m_creationDate != dto.creationDate()) {
                 m_creationDate = dto.creationDate();
-                emit creationDateChanged();
+                Q_EMIT creationDateChanged();
             }
             if (m_updateDate != dto.updateDate()) {
                 m_updateDate = dto.updateDate();
-                emit updateDateChanged();
+                Q_EMIT updateDateChanged();
             }
             if (m_applicationName != dto.applicationName()) {
                 m_applicationName = dto.applicationName();
-                emit applicationNameChanged();
+                Q_EMIT applicationNameChanged();
             }
             if (m_applicationCppDomainName != dto.applicationCppDomainName()) {
                 m_applicationCppDomainName = dto.applicationCppDomainName();
-                emit applicationCppDomainNameChanged();
+                Q_EMIT applicationCppDomainNameChanged();
             }
             if (m_organisationName != dto.organisationName()) {
                 m_organisationName = dto.organisationName();
-                emit organisationNameChanged();
+                Q_EMIT organisationNameChanged();
             }
             if (m_organisationDomain != dto.organisationDomain()) {
                 m_organisationDomain = dto.organisationDomain();
-                emit organisationDomainChanged();
+                Q_EMIT organisationDomainChanged();
             }
         }
     });
@@ -63,30 +63,30 @@ void SingleGlobalComponent::setId(int newId)
     if (m_id == newId)
         return;
     m_id = newId;
-    emit idChanged();
+    Q_EMIT idChanged();
 
     // clear
     if (m_id == 0) {
         m_uuid = QUuid{};
-        emit uuidChanged();
+        Q_EMIT uuidChanged();
 
         m_creationDate = QDateTime{};
-        emit creationDateChanged();
+        Q_EMIT creationDateChanged();
 
         m_updateDate = QDateTime{};
-        emit updateDateChanged();
+        Q_EMIT updateDateChanged();
 
         m_applicationName = QString{};
-        emit applicationNameChanged();
+        Q_EMIT applicationNameChanged();
 
         m_applicationCppDomainName = QString{};
-        emit applicationCppDomainNameChanged();
+        Q_EMIT applicationCppDomainNameChanged();
 
         m_organisationName = QString{};
-        emit organisationNameChanged();
+        Q_EMIT organisationNameChanged();
 
         m_organisationDomain = QString{};
-        emit organisationDomainChanged();
+        Q_EMIT organisationDomainChanged();
 
     }
 
@@ -100,25 +100,25 @@ void SingleGlobalComponent::setId(int newId)
                 }
 
                 m_uuid = globalComponent.uuid();
-                emit uuidChanged();
+                Q_EMIT uuidChanged();
 
                 m_creationDate = globalComponent.creationDate();
-                emit creationDateChanged();
+                Q_EMIT creationDateChanged();
 
                 m_updateDate = globalComponent.updateDate();
-                emit updateDateChanged();
+                Q_EMIT updateDateChanged();
 
                 m_applicationName = globalComponent.applicationName();
-                emit applicationNameChanged();
+                Q_EMIT applicationNameChanged();
 
                 m_applicationCppDomainName = globalComponent.applicationCppDomainName();
-                emit applicationCppDomainNameChanged();
+                Q_EMIT applicationCppDomainNameChanged();
 
                 m_organisationName = globalComponent.organisationName();
-                emit organisationNameChanged();
+                Q_EMIT organisationNameChanged();
 
                 m_organisationDomain = globalComponent.organisationDomain();
-                emit organisationDomainChanged();
+                Q_EMIT organisationDomainChanged();
             });
     }
 }
@@ -148,7 +148,7 @@ void SingleGlobalComponent::setUuid(const QUuid &newUuid)
                 return;
             }
             m_uuid = globalComponent.uuid();
-            emit uuidChanged();
+            Q_EMIT uuidChanged();
         });
 }
 
@@ -172,7 +172,7 @@ void SingleGlobalComponent::setCreationDate(const QDateTime &newCreationDate)
                 return;
             }
             m_creationDate = globalComponent.creationDate();
-            emit creationDateChanged();
+            Q_EMIT creationDateChanged();
         });
 }
 
@@ -196,7 +196,7 @@ void SingleGlobalComponent::setUpdateDate(const QDateTime &newUpdateDate)
                 return;
             }
             m_updateDate = globalComponent.updateDate();
-            emit updateDateChanged();
+            Q_EMIT updateDateChanged();
         });
 }
 
@@ -220,7 +220,7 @@ void SingleGlobalComponent::setApplicationName(const QString &newApplicationName
                 return;
             }
             m_applicationName = globalComponent.applicationName();
-            emit applicationNameChanged();
+            Q_EMIT applicationNameChanged();
         });
 }
 
@@ -244,7 +244,7 @@ void SingleGlobalComponent::setApplicationCppDomainName(const QString &newApplic
                 return;
             }
             m_applicationCppDomainName = globalComponent.applicationCppDomainName();
-            emit applicationCppDomainNameChanged();
+            Q_EMIT applicationCppDomainNameChanged();
         });
 }
 
@@ -268,7 +268,7 @@ void SingleGlobalComponent::setOrganisationName(const QString &newOrganisationNa
                 return;
             }
             m_organisationName = globalComponent.organisationName();
-            emit organisationNameChanged();
+            Q_EMIT organisationNameChanged();
         });
 }
 
@@ -292,6 +292,6 @@ void SingleGlobalComponent::setOrganisationDomain(const QString &newOrganisation
                 return;
             }
             m_organisationDomain = globalComponent.organisationDomain();
-            emit organisationDomainChanged();
+            Q_EMIT organisationDomainChanged();
         });
 }

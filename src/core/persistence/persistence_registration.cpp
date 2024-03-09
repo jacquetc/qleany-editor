@@ -35,7 +35,7 @@ PersistenceRegistration::PersistenceRegistration(QObject *parent)
 
     if (initResult.hasError()) {
         Error error = initResult.error();
-        qCritical() << error.className() + "\n" + error.code() + "\n" + error.message() + "\n" + error.data();
+        qCritical() << error.className() + "\n"_L1 + error.code() + "\n"_L1 + error.message() + "\n"_L1 + error.data();
     }
 
     // repositories:

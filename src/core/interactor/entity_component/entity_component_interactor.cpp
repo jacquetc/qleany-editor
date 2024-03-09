@@ -41,7 +41,7 @@ EntityComponentInteractor *EntityComponentInteractor::instance()
 
 QCoro::Task<EntityComponentDTO> EntityComponentInteractor::get(int id) const
 {
-    auto queryCommand = new QueryCommand("get");
+    auto queryCommand = new QueryCommand("get"_L1);
 
     queryCommand->setQueryFunction([this, id](QPromise<Result<void>> &progressPromise) {
         GetEntityComponentQuery query;
@@ -51,12 +51,12 @@ QCoro::Task<EntityComponentDTO> EntityComponentInteractor::get(int id) const
         auto result = handler.handle(progressPromise, query);
 
         if (result.isSuccess()) {
-            emit m_eventDispatcher->entityComponent()->getReplied(result.value());
+            Q_EMIT m_eventDispatcher->entityComponent()->getReplied(result.value());
         }
         return Result<void>(result.error());
     });
 
-    m_undo_redo_system->push(queryCommand, "entityComponent");
+    m_undo_redo_system->push(queryCommand, "entityComponent"_L1);
 
     // async wait for result signal
     const std::optional<EntityComponentDTO> optional_result =
@@ -72,7 +72,7 @@ QCoro::Task<EntityComponentDTO> EntityComponentInteractor::get(int id) const
 
 QCoro::Task<EntityComponentWithDetailsDTO> EntityComponentInteractor::getWithDetails(int id) const
 {
-    auto queryCommand = new QueryCommand("getWithDetails");
+    auto queryCommand = new QueryCommand("getWithDetails"_L1);
 
     queryCommand->setQueryFunction([this, id](QPromise<Result<void>> &progressPromise) {
         GetEntityComponentQuery query;
@@ -82,12 +82,12 @@ QCoro::Task<EntityComponentWithDetailsDTO> EntityComponentInteractor::getWithDet
         auto result = handler.handle(progressPromise, query);
 
         if (result.isSuccess()) {
-            emit m_eventDispatcher->entityComponent()->getWithDetailsReplied(result.value());
+            Q_EMIT m_eventDispatcher->entityComponent()->getWithDetailsReplied(result.value());
         }
         return Result<void>(result.error());
     });
 
-    m_undo_redo_system->push(queryCommand, "entityComponent");
+    m_undo_redo_system->push(queryCommand, "entityComponent"_L1);
 
     // async wait for result signal
     const std::optional<EntityComponentWithDetailsDTO> optional_result =
@@ -113,7 +113,7 @@ QCoro::Task<EntityComponentDTO> EntityComponentInteractor::update(const UpdateEn
 
     // connect
     QObject::connect(handler, &UpdateEntityComponentCommandHandler::entityComponentUpdated, this, [this](EntityComponentDTO dto) {
-        emit m_eventDispatcher->entityComponent()->updated(dto);
+        Q_EMIT m_eventDispatcher->entityComponent()->updated(dto);
     });
     QObject::connect(handler,
                      &UpdateEntityComponentCommandHandler::entityComponentDetailsUpdated,
@@ -126,7 +126,7 @@ QCoro::Task<EntityComponentDTO> EntityComponentInteractor::update(const UpdateEn
                                                                                                        query);
 
     // push command
-    m_undo_redo_system->push(command, "entityComponent");
+    m_undo_redo_system->push(command, "entityComponent"_L1);
 
     // async wait for result signal
     const std::optional<EntityComponentDTO> optional_result =

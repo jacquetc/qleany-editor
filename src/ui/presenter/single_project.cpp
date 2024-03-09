@@ -19,23 +19,23 @@ SingleProject::SingleProject(QObject *parent)
         if (dto.id() == id()) {
             if (m_id != dto.id()) {
                 m_id = dto.id();
-                emit idChanged();
+                Q_EMIT idChanged();
             }
             if (m_uuid != dto.uuid()) {
                 m_uuid = dto.uuid();
-                emit uuidChanged();
+                Q_EMIT uuidChanged();
             }
             if (m_creationDate != dto.creationDate()) {
                 m_creationDate = dto.creationDate();
-                emit creationDateChanged();
+                Q_EMIT creationDateChanged();
             }
             if (m_updateDate != dto.updateDate()) {
                 m_updateDate = dto.updateDate();
-                emit updateDateChanged();
+                Q_EMIT updateDateChanged();
             }
             if (m_fileName != dto.fileName()) {
                 m_fileName = dto.fileName();
-                emit fileNameChanged();
+                Q_EMIT fileNameChanged();
             }
         }
     });
@@ -51,21 +51,21 @@ void SingleProject::setId(int newId)
     if (m_id == newId)
         return;
     m_id = newId;
-    emit idChanged();
+    Q_EMIT idChanged();
 
     // clear
     if (m_id == 0) {
         m_uuid = QUuid{};
-        emit uuidChanged();
+        Q_EMIT uuidChanged();
 
         m_creationDate = QDateTime{};
-        emit creationDateChanged();
+        Q_EMIT creationDateChanged();
 
         m_updateDate = QDateTime{};
-        emit updateDateChanged();
+        Q_EMIT updateDateChanged();
 
         m_fileName = QString{};
-        emit fileNameChanged();
+        Q_EMIT fileNameChanged();
 
     }
 
@@ -78,16 +78,16 @@ void SingleProject::setId(int newId)
             }
 
             m_uuid = project.uuid();
-            emit uuidChanged();
+            Q_EMIT uuidChanged();
 
             m_creationDate = project.creationDate();
-            emit creationDateChanged();
+            Q_EMIT creationDateChanged();
 
             m_updateDate = project.updateDate();
-            emit updateDateChanged();
+            Q_EMIT updateDateChanged();
 
             m_fileName = project.fileName();
-            emit fileNameChanged();
+            Q_EMIT fileNameChanged();
         });
     }
 }

@@ -31,7 +31,7 @@ Result<QleanyEditor::Entities::EntityComponent> EntityComponentRepository::updat
 
     if (entity.metaData().entitiesSet) {
         Result<QList<Entities::Entity>> entitiesResult =
-            m_entityRepository->updateEntitiesInRelationOf(Entities::EntityComponent::schema, entity.id(), "entities", entity.entities());
+            m_entityRepository->updateEntitiesInRelationOf(Entities::EntityComponent::schema, entity.id(), "entities"_L1, entity.entities());
 
 #ifdef QT_DEBUG
         if (entitiesResult.isError()) {
@@ -56,7 +56,7 @@ Result<QleanyEditor::Entities::EntityComponent> EntityComponentRepository::getWi
 
     Entities::EntityComponent entity = getResult.value();
 
-    Result<QList<Entities::Entity>> entitiesResult = m_entityRepository->getEntitiesInRelationOf(Entities::EntityComponent::schema, entity.id(), "entities");
+    Result<QList<Entities::Entity>> entitiesResult = m_entityRepository->getEntitiesInRelationOf(Entities::EntityComponent::schema, entity.id(), "entities"_L1);
 
 #ifdef QT_DEBUG
     if (entitiesResult.isError()) {
@@ -83,7 +83,8 @@ QleanyEditor::Entities::EntityComponent::EntitiesLoader EntityComponentRepositor
 #endif
 
     return [this](int entityId) {
-        auto foreignEntitiesResult = m_entityRepository->getEntitiesInRelationOf(QleanyEditor::Entities::EntityComponent::schema, entityId, "entities");
+        auto foreignEntitiesResult =
+            m_entityRepository->getEntitiesInRelationOf(QleanyEditor::Entities::EntityComponent::schema, entityId, QString::fromLatin1("entities"));
 
         if (foreignEntitiesResult.isError()) {
             qCritical() << foreignEntitiesResult.error().code() << foreignEntitiesResult.error().message() << foreignEntitiesResult.error().data();
@@ -103,7 +104,7 @@ Result<QHash<int, QList<int>>> EntityComponentRepository::removeInCascade(QList<
 
     Qleany::Entities::RelationshipInfo entityEntitiesRelationship;
     for (const Qleany::Entities::RelationshipInfo &relationship : QleanyEditor::Entities::EntityComponent::schema.relationships) {
-        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::Entity && relationship.fieldName == "entities") {
+        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::Entity && relationship.fieldName == "entities"_L1) {
             entityEntitiesRelationship = relationship;
             break;
         }
@@ -141,7 +142,7 @@ Result<QHash<int, QList<int>>> EntityComponentRepository::removeInCascade(QList<
 
     returnedHashOfEntityWithRemovedIds.insert(QleanyEditor::Entities::Entities::EntityComponent, removedIdsResult.value());
 
-    emit m_signalHolder->removed(removedIdsResult.value());
+    Q_EMIT m_signalHolder->removed(removedIdsResult.value());
 
     return Result<QHash<int, QList<int>>>(returnedHashOfEntityWithRemovedIds);
 }
@@ -155,7 +156,7 @@ Result<QHash<int, QList<int>>> EntityComponentRepository::changeActiveStatusInCa
 
     Qleany::Entities::RelationshipInfo entityEntitiesRelationship;
     for (const Qleany::Entities::RelationshipInfo &relationship : QleanyEditor::Entities::EntityComponent::schema.relationships) {
-        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::Entity && relationship.fieldName == "entities") {
+        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::Entity && relationship.fieldName == QString::fromLatin1("entities")) {
             entityEntitiesRelationship = relationship;
             break;
         }
@@ -192,7 +193,7 @@ Result<QHash<int, QList<int>>> EntityComponentRepository::changeActiveStatusInCa
     QLN_RETURN_IF_ERROR(QHash<int QLN_COMMA QList<int>>, changedIdsResult)
 
     returnedHashOfEntityWithActiveChangedIds.insert(QleanyEditor::Entities::Entities::EntityComponent, changedIdsResult.value());
-    emit m_signalHolder->activeStatusChanged(changedIdsResult.value(), active);
+    Q_EMIT m_signalHolder->activeStatusChanged(changedIdsResult.value(), active);
 
     return Result<QHash<int, QList<int>>>(returnedHashOfEntityWithActiveChangedIds);
 }

@@ -32,7 +32,7 @@ public:
 
     Q_INVOKABLE QCoro::Task<RootDTO> get(int id) const;
 
-public slots:
+public Q_SLOTS:
 
 private:
     static QPointer<RootInteractor> s_instance;

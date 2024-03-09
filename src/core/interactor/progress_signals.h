@@ -46,7 +46,7 @@ public:
                          Qt::QueuedConnection);
     }
 
-signals:
+Q_SIGNALS:
     void progressStarted();
     void progressFinished();
     void progressRangeChanged(int minimum, int maximum);

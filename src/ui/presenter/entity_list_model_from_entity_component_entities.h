@@ -46,7 +46,7 @@ public:
 
     QHash<int, QByteArray> roleNames() const override;
 
-signals:
+Q_SIGNALS:
     void entityComponentIdChanged();
 
 private:

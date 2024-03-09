@@ -63,8 +63,8 @@ Result<void> SaveProjectCommandHandler::handleImpl(QPromise<Result<void>> &progr
 
     m_projectRepository->saveChanges();
 
-    // emit signal
-    // emit saveProjectChanged();
+    // Q_EMIT signal
+    // Q_EMIT saveProjectChanged();
 
     // Return
     return Result<void>();

@@ -37,13 +37,13 @@ public:
 
         bool getSet(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("uuid")) {
+            if (fieldName == "uuid"_L1) {
                 return true;
             }
-            if (fieldName == QString::fromUtf8("creationDate")) {
+            if (fieldName == "creationDate"_L1) {
                 return true;
             }
-            if (fieldName == QString::fromUtf8("updateDate")) {
+            if (fieldName == "updateDate"_L1) {
                 return true;
             }
             return m_entity->EntityBase::metaData().getSet(fieldName);
@@ -51,13 +51,13 @@ public:
 
         bool getLoaded(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("uuid")) {
+            if (fieldName == "uuid"_L1) {
                 return true;
             }
-            if (fieldName == QString::fromUtf8("creationDate")) {
+            if (fieldName == "creationDate"_L1) {
                 return true;
             }
-            if (fieldName == QString::fromUtf8("updateDate")) {
+            if (fieldName == "updateDate"_L1) {
                 return true;
             }
             return m_entity->EntityBase::metaData().getLoaded(fieldName);
@@ -195,7 +195,7 @@ inline uint qHash(const CommonParent &entity, uint seed = 0) noexcept
 
 /// Schema for CommonParent entity
 inline Qleany::Entities::EntitySchema CommonParent::schema = {QleanyEditor::Entities::Entities::EntityEnum::CommonParent,
-                                                              QString::fromUtf8("CommonParent"),
+                                                              "CommonParent"_L1,
 
                                                               // relationships:
                                                               {
@@ -203,10 +203,10 @@ inline Qleany::Entities::EntitySchema CommonParent::schema = {QleanyEditor::Enti
                                                               },
 
                                                               // fields:
-                                                              {{QString::fromUtf8("id"), FieldType::Integer, true, false},
-                                                               {QString::fromUtf8("uuid"), FieldType::Uuid, false, false},
-                                                               {QString::fromUtf8("creationDate"), FieldType::DateTime, false, false},
-                                                               {QString::fromUtf8("updateDate"), FieldType::DateTime, false, false}}};
+                                                              {{"id"_L1, FieldType::Integer, true, false},
+                                                               {"uuid"_L1, FieldType::Uuid, false, false},
+                                                               {"creationDate"_L1, FieldType::DateTime, false, false},
+                                                               {"updateDate"_L1, FieldType::DateTime, false, false}}};
 
 } // namespace QleanyEditor::Entities
 Q_DECLARE_METATYPE(QleanyEditor::Entities::CommonParent)

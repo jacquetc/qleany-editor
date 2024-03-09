@@ -17,7 +17,7 @@ public:
 
     Qleany::Repository::RepositoryProvider *repositoryProvider();
 
-signals:
+Q_SIGNALS:
 
 private:
     QScopedPointer<Qleany::Repository::RepositoryProvider> m_repositoryProvider;

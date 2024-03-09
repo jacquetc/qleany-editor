@@ -35,7 +35,7 @@ public:
 
     Q_INVOKABLE static Contracts::DTO::GlobalComponent::UpdateGlobalComponentDTO getUpdateDTO();
 
-public slots:
+public Q_SLOTS:
 
     QCoro::Task<GlobalComponentDTO> update(const UpdateGlobalComponentDTO &dto);
 

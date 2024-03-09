@@ -70,7 +70,7 @@ EntityListModelFromEntityComponentEntities::EntityListModelFromEntityComponentEn
                     m_entityList[i] = newEntityList[i];
                     QModelIndex topLeft = index(i, 0);
                     QModelIndex bottomRight = index(i, 0);
-                    emit dataChanged(topLeft, bottomRight);
+                    Q_EMIT dataChanged(topLeft, bottomRight);
                 }
             }
 
@@ -133,7 +133,7 @@ EntityListModelFromEntityComponentEntities::EntityListModelFromEntityComponentEn
             if (m_entityIdList.at(i) == dto.id()) {
                 m_entityList[i] = dto;
                 m_entityIdList[i] = dto.id();
-                emit dataChanged(index(i), index(i));
+                Q_EMIT dataChanged(index(i), index(i));
                 break;
             }
         }
@@ -225,7 +225,7 @@ bool EntityListModelFromEntityComponentEntities::setData(const QModelIndex &inde
                 qCritical() << Q_FUNC_INFO << "Invalid entityComponent";
                 return false;
             }
-            emit dataChanged(index, index, {role});
+            Q_EMIT dataChanged(index, index, {role});
             return true;
         });
 
@@ -247,7 +247,7 @@ bool EntityListModelFromEntityComponentEntities::setData(const QModelIndex &inde
                 qCritical() << Q_FUNC_INFO << "Invalid entityComponent";
                 return false;
             }
-            emit dataChanged(index, index, {role});
+            Q_EMIT dataChanged(index, index, {role});
             return true;
         });
 
@@ -269,7 +269,7 @@ bool EntityListModelFromEntityComponentEntities::setData(const QModelIndex &inde
                 qCritical() << Q_FUNC_INFO << "Invalid entityComponent";
                 return false;
             }
-            emit dataChanged(index, index, {role});
+            Q_EMIT dataChanged(index, index, {role});
             return true;
         });
 
@@ -291,7 +291,7 @@ bool EntityListModelFromEntityComponentEntities::setData(const QModelIndex &inde
                 qCritical() << Q_FUNC_INFO << "Invalid entityComponent";
                 return false;
             }
-            emit dataChanged(index, index, {role});
+            Q_EMIT dataChanged(index, index, {role});
             return true;
         });
 
@@ -313,7 +313,7 @@ bool EntityListModelFromEntityComponentEntities::setData(const QModelIndex &inde
                 qCritical() << Q_FUNC_INFO << "Invalid entityComponent";
                 return false;
             }
-            emit dataChanged(index, index, {role});
+            Q_EMIT dataChanged(index, index, {role});
             return true;
         });
 
@@ -374,7 +374,7 @@ void EntityListModelFromEntityComponentEntities::setEntityComponentId(int newEnt
     } else {
         populate();
     }
-    emit entityComponentIdChanged();
+    Q_EMIT entityComponentIdChanged();
 }
 
 void EntityListModelFromEntityComponentEntities::resetEntityComponentId()

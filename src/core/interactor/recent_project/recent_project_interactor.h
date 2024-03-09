@@ -34,7 +34,7 @@ public:
 
     Q_INVOKABLE QCoro::Task<QList<RecentProjectDTO>> getAll() const;
 
-public slots:
+public Q_SLOTS:
 
     QCoro::Task<bool> remove(int id);
 

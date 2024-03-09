@@ -38,7 +38,7 @@ public:
 
     Q_INVOKABLE static Contracts::DTO::Entity::UpdateEntityDTO getUpdateDTO();
 
-public slots:
+public Q_SLOTS:
 
     QCoro::Task<EntityDTO> create(const CreateEntityDTO &dto);
 

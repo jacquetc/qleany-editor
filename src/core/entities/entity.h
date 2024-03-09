@@ -32,7 +32,7 @@ public:
 
         bool getSet(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("name")) {
+            if (fieldName == "name"_L1) {
                 return true;
             }
             return m_entity->CommonParent::metaData().getSet(fieldName);
@@ -40,7 +40,7 @@ public:
 
         bool getLoaded(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("name")) {
+            if (fieldName == "name"_L1) {
                 return true;
             }
             return m_entity->CommonParent::metaData().getLoaded(fieldName);
@@ -142,25 +142,25 @@ inline uint qHash(const Entity &entity, uint seed = 0) noexcept
 
 /// Schema for Entity entity
 inline Qleany::Entities::EntitySchema Entity::schema = {QleanyEditor::Entities::Entities::EntityEnum::Entity,
-                                                        QString::fromUtf8("Entity"),
+                                                        "Entity"_L1,
 
                                                         // relationships:
                                                         {{QleanyEditor::Entities::Entities::EntityEnum::EntityComponent,
-                                                          QString::fromUtf8("EntityComponent"),
+                                                          "EntityComponent"_L1,
                                                           QleanyEditor::Entities::Entities::EntityEnum::Entity,
-                                                          QString::fromUtf8("Entity"),
-                                                          QString::fromUtf8("entities"),
+                                                          "Entity"_L1,
+                                                          "entities"_L1,
                                                           RelationshipType::OneToMany,
                                                           RelationshipStrength::Strong,
                                                           RelationshipCardinality::ManyOrdered,
                                                           RelationshipDirection::Backward}},
 
                                                         // fields:
-                                                        {{QString::fromUtf8("id"), FieldType::Integer, true, false},
-                                                         {QString::fromUtf8("uuid"), FieldType::Uuid, false, false},
-                                                         {QString::fromUtf8("creationDate"), FieldType::DateTime, false, false},
-                                                         {QString::fromUtf8("updateDate"), FieldType::DateTime, false, false},
-                                                         {QString::fromUtf8("name"), FieldType::String, false, false}}};
+                                                        {{"id"_L1, FieldType::Integer, true, false},
+                                                         {"uuid"_L1, FieldType::Uuid, false, false},
+                                                         {"creationDate"_L1, FieldType::DateTime, false, false},
+                                                         {"updateDate"_L1, FieldType::DateTime, false, false},
+                                                         {"name"_L1, FieldType::String, false, false}}};
 
 } // namespace QleanyEditor::Entities
 Q_DECLARE_METATYPE(QleanyEditor::Entities::Entity)

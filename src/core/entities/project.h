@@ -40,10 +40,10 @@ public:
 
         bool getSet(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("fileName")) {
+            if (fieldName == "fileName"_L1) {
                 return true;
             }
-            if (fieldName == QString::fromUtf8("globalComponent")) {
+            if (fieldName == "globalComponent"_L1) {
                 return globalComponentSet;
             }
             return m_entity->CommonParent::metaData().getSet(fieldName);
@@ -51,10 +51,10 @@ public:
 
         bool getLoaded(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("fileName")) {
+            if (fieldName == "fileName"_L1) {
                 return true;
             }
-            if (fieldName == QString::fromUtf8("globalComponent")) {
+            if (fieldName == "globalComponent"_L1) {
                 return globalComponentLoaded;
             }
             return m_entity->CommonParent::metaData().getLoaded(fieldName);
@@ -192,35 +192,35 @@ inline uint qHash(const Project &entity, uint seed = 0) noexcept
 
 /// Schema for Project entity
 inline Qleany::Entities::EntitySchema Project::schema = {QleanyEditor::Entities::Entities::EntityEnum::Project,
-                                                         QString::fromUtf8("Project"),
+                                                         "Project"_L1,
 
                                                          // relationships:
                                                          {{QleanyEditor::Entities::Entities::EntityEnum::Root,
-                                                           QString::fromUtf8("Root"),
+                                                           "Root"_L1,
                                                            QleanyEditor::Entities::Entities::EntityEnum::Project,
-                                                           QString::fromUtf8("Project"),
-                                                           QString::fromUtf8("project"),
+                                                           "Project"_L1,
+                                                           "project"_L1,
                                                            RelationshipType::OneToOne,
                                                            RelationshipStrength::Strong,
                                                            RelationshipCardinality::One,
                                                            RelationshipDirection::Backward},
                                                           {QleanyEditor::Entities::Entities::EntityEnum::Project,
-                                                           QString::fromUtf8("Project"),
+                                                           "Project"_L1,
                                                            QleanyEditor::Entities::Entities::EntityEnum::GlobalComponent,
-                                                           QString::fromUtf8("GlobalComponent"),
-                                                           QString::fromUtf8("globalComponent"),
+                                                           "GlobalComponent"_L1,
+                                                           "globalComponent"_L1,
                                                            RelationshipType::OneToOne,
                                                            RelationshipStrength::Strong,
                                                            RelationshipCardinality::One,
                                                            RelationshipDirection::Forward}},
 
                                                          // fields:
-                                                         {{QString::fromUtf8("id"), FieldType::Integer, true, false},
-                                                          {QString::fromUtf8("uuid"), FieldType::Uuid, false, false},
-                                                          {QString::fromUtf8("creationDate"), FieldType::DateTime, false, false},
-                                                          {QString::fromUtf8("updateDate"), FieldType::DateTime, false, false},
-                                                          {QString::fromUtf8("fileName"), FieldType::String, false, false},
-                                                          {QString::fromUtf8("globalComponent"), FieldType::Entity, false, true}}};
+                                                         {{"id"_L1, FieldType::Integer, true, false},
+                                                          {"uuid"_L1, FieldType::Uuid, false, false},
+                                                          {"creationDate"_L1, FieldType::DateTime, false, false},
+                                                          {"updateDate"_L1, FieldType::DateTime, false, false},
+                                                          {"fileName"_L1, FieldType::String, false, false},
+                                                          {"globalComponent"_L1, FieldType::Entity, false, true}}};
 
 } // namespace QleanyEditor::Entities
 Q_DECLARE_METATYPE(QleanyEditor::Entities::Project)

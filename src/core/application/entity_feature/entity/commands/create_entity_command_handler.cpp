@@ -102,7 +102,7 @@ Result<EntityDTO> CreateEntityCommandHandler::handleImpl(QPromise<Result<void>> 
     int position = -1;
 
     if (m_firstPass) {
-        auto originalOwnerEntitiesResult = m_repository->getEntitiesInRelationOf(EntityComponent::schema, ownerId, "entities");
+        auto originalOwnerEntitiesResult = m_repository->getEntitiesInRelationOf(EntityComponent::schema, ownerId, "entities"_L1);
         if (Q_UNLIKELY(originalOwnerEntitiesResult.hasError())) {
             return Result<EntityDTO>(originalOwnerEntitiesResult.error());
         }
@@ -136,7 +136,7 @@ Result<EntityDTO> CreateEntityCommandHandler::handleImpl(QPromise<Result<void>> 
 
     // Add the entity to the owner entity
     Result<QList<QleanyEditor::Entities::Entity>> updateResult =
-        m_repository->updateEntitiesInRelationOf(EntityComponent::schema, ownerId, "entities", ownerEntityEntities);
+        m_repository->updateEntitiesInRelationOf(EntityComponent::schema, ownerId, "entities"_L1, ownerEntityEntities);
 
     QLN_RETURN_IF_ERROR_WITH_ACTION(EntityDTO, updateResult, m_repository->cancelChanges();)
 
@@ -145,10 +145,10 @@ Result<EntityDTO> CreateEntityCommandHandler::handleImpl(QPromise<Result<void>> 
     m_newEntity = entityResult;
 
     auto entityDTO = Qleany::Tools::AutoMapper::AutoMapper::map<QleanyEditor::Entities::Entity, EntityDTO>(entityResult.value());
-    emit entityCreated(entityDTO);
+    Q_EMIT entityCreated(entityDTO);
 
     // send an insertion signal
-    emit relationWithOwnerInserted(entity.id(), ownerId, position);
+    Q_EMIT relationWithOwnerInserted(entity.id(), ownerId, position);
 
     qDebug() << "Entity added:" << entityDTO.id();
 
@@ -165,11 +165,11 @@ Result<EntityDTO> CreateEntityCommandHandler::restoreImpl()
 
     QLN_RETURN_IF_ERROR(EntityDTO, deleteResult)
 
-    emit entityRemoved(deleteResult.value());
+    Q_EMIT entityRemoved(deleteResult.value());
 
     qDebug() << "Entity removed:" << deleteResult.value();
 
-    emit relationWithOwnerRemoved(entityId, m_ownerId);
+    Q_EMIT relationWithOwnerRemoved(entityId, m_ownerId);
 
     return Result<EntityDTO>(EntityDTO());
 }

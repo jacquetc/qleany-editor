@@ -26,7 +26,7 @@ public:
     Result<EntityDTO> handle(QPromise<Result<void>> &progressPromise, const CreateEntityCommand &request);
     Result<EntityDTO> restore();
 
-signals:
+Q_SIGNALS:
     void entityCreated(QleanyEditor::Contracts::DTO::Entity::EntityDTO entityDto);
     void entityRemoved(int id);
 

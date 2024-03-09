@@ -5,23 +5,24 @@ import QtQuick
 import QtQuick.Controls as Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
+import Interactors
 
 Kirigami.ApplicationWindow {
     id: root
 
-    title: i18n("qleany-editor")
+    title: i18n("Qleany Editor")
 
     minimumWidth: Kirigami.Units.gridUnit * 20
     minimumHeight: Kirigami.Units.gridUnit * 20
 
-    onClosing: App.saveWindowGeometry(root)
+    onClosing: root.saveWindowGeometry(root)
 
     onWidthChanged: saveWindowGeometryTimer.restart()
     onHeightChanged: saveWindowGeometryTimer.restart()
     onXChanged: saveWindowGeometryTimer.restart()
     onYChanged: saveWindowGeometryTimer.restart()
 
-    Component.onCompleted: App.restoreWindowGeometry(root)
+    Component.onCompleted: root.restoreWindowGeometry(root)
 
     // This timer allows to batch update the window size change to reduce
     // the io load and also work around the fact that x/y/width/height are
@@ -39,9 +40,14 @@ Kirigami.ApplicationWindow {
         isMenu: !Kirigami.Settings.isMobile
         actions: [
             Kirigami.Action {
-                text: i18n("Plus One")
+                text: i18n("Load project")
                 icon.name: "list-add"
-                onTriggered: root.counter += 1
+                onTriggered: {
+                    console.log("eee")
+                    ProjectInteractor.loadProject(loadProjectDTO)
+                    console.log("eee")
+}
+
             },
             Kirigami.Action {
                 text: i18n("About qleany-editor")

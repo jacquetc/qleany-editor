@@ -21,22 +21,22 @@ InteractorRegistration::InteractorRegistration(QObject *parent, InterfaceReposit
     auto dispatcher = QSharedPointer<EventDispatcher>(new EventDispatcher());
 
     // Undo Redo System
-    Scopes scopes(QStringList() << "root"
-                                << "recentProject"
-                                << "project"
-                                << "globalComponent"
-                                << "entityComponent"
-                                << "entity");
+    Scopes scopes(QStringList() << "root"_L1
+                                << "recentProject"_L1
+                                << "project"_L1
+                                << "globalComponent"_L1
+                                << "entityComponent"_L1
+                                << "entity"_L1);
     auto *undoRedoSystem = new Qleany::Tools::UndoRedo::ThreadedUndoRedoSystem(this, scopes);
 
     // error handling
     connect(undoRedoSystem, &Qleany::Tools::UndoRedo::ThreadedUndoRedoSystem::errorSent, this, [dispatcher](Qleany::Error error) {
         qDebug() << "Error in undo redo system: " << error.status() << error.code() << error.message() << error.data() << error.stackTrace();
-        emit dispatcher->error()->errorSent(error);
+        Q_EMIT dispatcher->error()->errorSent(error);
     });
     connect(undoRedoSystem, &Qleany::Tools::UndoRedo::ThreadedUndoRedoSystem::warningSent, this, [dispatcher](Qleany::Error error) {
         qDebug() << "Warning in undo redo system: " << error.status() << error.code() << error.message() << error.data() << error.stackTrace();
-        emit dispatcher->error()->warningSent(error);
+        Q_EMIT dispatcher->error()->warningSent(error);
     });
 
     // RootInteractor
@@ -67,7 +67,7 @@ InteractorRegistration::InteractorRegistration(QObject *parent, InterfaceReposit
 
     connect(recentProjectSignalHolder, &Qleany::Contracts::Repository::SignalHolder::removed, this, [dispatcher](QList<int> removedIds) {
         RootRelationDTO dto(-1, RootRelationDTO::RelationField::RecentProjects, removedIds, -1);
-        emit dispatcher->root()->relationRemoved(dto);
+        Q_EMIT dispatcher->root()->relationRemoved(dto);
     });
 
     // active status
@@ -89,7 +89,7 @@ InteractorRegistration::InteractorRegistration(QObject *parent, InterfaceReposit
 
     connect(projectSignalHolder, &Qleany::Contracts::Repository::SignalHolder::removed, this, [dispatcher](QList<int> removedIds) {
         RootRelationDTO dto(-1, RootRelationDTO::RelationField::Project, removedIds, -1);
-        emit dispatcher->root()->relationRemoved(dto);
+        Q_EMIT dispatcher->root()->relationRemoved(dto);
     });
 
     // active status
@@ -114,7 +114,7 @@ InteractorRegistration::InteractorRegistration(QObject *parent, InterfaceReposit
 
     connect(globalComponentSignalHolder, &Qleany::Contracts::Repository::SignalHolder::removed, this, [dispatcher](QList<int> removedIds) {
         ProjectRelationDTO dto(-1, ProjectRelationDTO::RelationField::GlobalComponent, removedIds, -1);
-        emit dispatcher->project()->relationRemoved(dto);
+        Q_EMIT dispatcher->project()->relationRemoved(dto);
     });
 
     // active status
@@ -154,7 +154,7 @@ InteractorRegistration::InteractorRegistration(QObject *parent, InterfaceReposit
 
     connect(entitySignalHolder, &Qleany::Contracts::Repository::SignalHolder::removed, this, [dispatcher](QList<int> removedIds) {
         EntityComponentRelationDTO dto(-1, EntityComponentRelationDTO::RelationField::Entities, removedIds, -1);
-        emit dispatcher->entityComponent()->relationRemoved(dto);
+        Q_EMIT dispatcher->entityComponent()->relationRemoved(dto);
     });
 
     // active status

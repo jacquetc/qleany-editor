@@ -69,8 +69,8 @@ Result<int> RemoveRecentProjectCommandHandler::handleImpl(QPromise<Result<void>>
 
     QLN_RETURN_IF_ERROR(int, deleteResult)
 
-    // repositories handle remove signals
-    // emit recentProjectRemoved(deleteResult.value());
+    // repositories handle remove Q_SIGNALS
+    // Q_EMIT recentProjectRemoved(deleteResult.value());
 
     qDebug() << "RecentProject removed:" << recentProjectId;
 

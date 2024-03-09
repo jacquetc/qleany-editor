@@ -54,7 +54,7 @@ public:
     QString organisationDomain() const;
     void setOrganisationDomain(const QString &newOrganisationDomain);
 
-signals:
+Q_SIGNALS:
 
     void idChanged();
 

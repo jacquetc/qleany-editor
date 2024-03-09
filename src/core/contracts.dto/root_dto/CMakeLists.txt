@@ -22,11 +22,11 @@ set_target_properties(${LIBRARY_NAME} PROPERTIES
                     
 set_target_properties(${LIBRARY_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
-add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-recent-project)
 add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-project)
+add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-recent-project)
 
-target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-recent-project)
 target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-project)
+target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-recent-project)
 
 
 target_link_libraries(${LIBRARY_NAME}

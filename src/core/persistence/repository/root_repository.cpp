@@ -33,7 +33,7 @@ Result<QleanyEditor::Entities::Root> RootRepository::update(Entities::Root &&ent
 
     if (entity.metaData().projectSet) {
         Result<Entities::Project> projectResult =
-            m_projectRepository->updateEntityInRelationOf(Entities::Root::schema, entity.id(), "project", entity.project());
+            m_projectRepository->updateEntityInRelationOf(Entities::Root::schema, entity.id(), "project"_L1, entity.project());
 
 #ifdef QT_DEBUG
         if (projectResult.isError()) {
@@ -46,7 +46,7 @@ Result<QleanyEditor::Entities::Root> RootRepository::update(Entities::Root &&ent
 
     if (entity.metaData().recentProjectsSet) {
         Result<QList<Entities::RecentProject>> recentProjectsResult =
-            m_recentProjectRepository->updateEntitiesInRelationOf(Entities::Root::schema, entity.id(), "recentProjects", entity.recentProjects());
+            m_recentProjectRepository->updateEntitiesInRelationOf(Entities::Root::schema, entity.id(), "recentProjects"_L1, entity.recentProjects());
 
 #ifdef QT_DEBUG
         if (recentProjectsResult.isError()) {
@@ -71,7 +71,7 @@ Result<QleanyEditor::Entities::Root> RootRepository::getWithDetails(int entityId
 
     Entities::Root entity = getResult.value();
 
-    Result<Entities::Project> projectResult = m_projectRepository->getEntityInRelationOf(Entities::Root::schema, entity.id(), "project");
+    Result<Entities::Project> projectResult = m_projectRepository->getEntityInRelationOf(Entities::Root::schema, entity.id(), "project"_L1);
 
 #ifdef QT_DEBUG
     if (projectResult.isError()) {
@@ -84,7 +84,7 @@ Result<QleanyEditor::Entities::Root> RootRepository::getWithDetails(int entityId
     entity.setProject(projectResult.value());
 
     Result<QList<Entities::RecentProject>> recentProjectsResult =
-        m_recentProjectRepository->getEntitiesInRelationOf(Entities::Root::schema, entity.id(), "recentProjects");
+        m_recentProjectRepository->getEntitiesInRelationOf(Entities::Root::schema, entity.id(), "recentProjects"_L1);
 
 #ifdef QT_DEBUG
     if (recentProjectsResult.isError()) {
@@ -111,7 +111,7 @@ QleanyEditor::Entities::Root::ProjectLoader RootRepository::fetchProjectLoader()
 #endif
 
     return [this](int entityId) {
-        auto foreignEntityResult = m_projectRepository->getEntityInRelationOf(QleanyEditor::Entities::Root::schema, entityId, "project");
+        auto foreignEntityResult = m_projectRepository->getEntityInRelationOf(QleanyEditor::Entities::Root::schema, entityId, "project"_L1);
 
         if (foreignEntityResult.isError()) {
             qCritical() << foreignEntityResult.error().code() << foreignEntityResult.error().message() << foreignEntityResult.error().data();
@@ -134,7 +134,8 @@ QleanyEditor::Entities::Root::RecentProjectsLoader RootRepository::fetchRecentPr
 #endif
 
     return [this](int entityId) {
-        auto foreignEntitiesResult = m_recentProjectRepository->getEntitiesInRelationOf(QleanyEditor::Entities::Root::schema, entityId, "recentProjects");
+        auto foreignEntitiesResult =
+            m_recentProjectRepository->getEntitiesInRelationOf(QleanyEditor::Entities::Root::schema, entityId, QString::fromLatin1("recentProjects"));
 
         if (foreignEntitiesResult.isError()) {
             qCritical() << foreignEntitiesResult.error().code() << foreignEntitiesResult.error().message() << foreignEntitiesResult.error().data();
@@ -154,7 +155,7 @@ Result<QHash<int, QList<int>>> RootRepository::removeInCascade(QList<int> ids)
 
     Qleany::Entities::RelationshipInfo projectProjectRelationship;
     for (const Qleany::Entities::RelationshipInfo &relationship : QleanyEditor::Entities::Root::schema.relationships) {
-        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::Project && relationship.fieldName == "project") {
+        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::Project && relationship.fieldName == "project"_L1) {
             projectProjectRelationship = relationship;
             break;
         }
@@ -185,7 +186,7 @@ Result<QHash<int, QList<int>>> RootRepository::removeInCascade(QList<int> ids)
 
     Qleany::Entities::RelationshipInfo recentProjectRecentProjectsRelationship;
     for (const Qleany::Entities::RelationshipInfo &relationship : QleanyEditor::Entities::Root::schema.relationships) {
-        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::RecentProject && relationship.fieldName == "recentProjects") {
+        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::RecentProject && relationship.fieldName == "recentProjects"_L1) {
             recentProjectRecentProjectsRelationship = relationship;
             break;
         }
@@ -223,7 +224,7 @@ Result<QHash<int, QList<int>>> RootRepository::removeInCascade(QList<int> ids)
 
     returnedHashOfEntityWithRemovedIds.insert(QleanyEditor::Entities::Entities::Root, removedIdsResult.value());
 
-    emit m_signalHolder->removed(removedIdsResult.value());
+    Q_EMIT m_signalHolder->removed(removedIdsResult.value());
 
     return Result<QHash<int, QList<int>>>(returnedHashOfEntityWithRemovedIds);
 }
@@ -237,7 +238,7 @@ Result<QHash<int, QList<int>>> RootRepository::changeActiveStatusInCascade(QList
 
     Qleany::Entities::RelationshipInfo projectProjectRelationship;
     for (const Qleany::Entities::RelationshipInfo &relationship : QleanyEditor::Entities::Root::schema.relationships) {
-        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::Project && relationship.fieldName == "project") {
+        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::Project && relationship.fieldName == QString::fromLatin1("project")) {
             projectProjectRelationship = relationship;
             break;
         }
@@ -269,7 +270,7 @@ Result<QHash<int, QList<int>>> RootRepository::changeActiveStatusInCascade(QList
 
     Qleany::Entities::RelationshipInfo recentProjectRecentProjectsRelationship;
     for (const Qleany::Entities::RelationshipInfo &relationship : QleanyEditor::Entities::Root::schema.relationships) {
-        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::RecentProject && relationship.fieldName == "recentProjects") {
+        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::RecentProject && relationship.fieldName == QString::fromLatin1("recentProjects")) {
             recentProjectRecentProjectsRelationship = relationship;
             break;
         }
@@ -306,7 +307,7 @@ Result<QHash<int, QList<int>>> RootRepository::changeActiveStatusInCascade(QList
     QLN_RETURN_IF_ERROR(QHash<int QLN_COMMA QList<int>>, changedIdsResult)
 
     returnedHashOfEntityWithActiveChangedIds.insert(QleanyEditor::Entities::Entities::Root, changedIdsResult.value());
-    emit m_signalHolder->activeStatusChanged(changedIdsResult.value(), active);
+    Q_EMIT m_signalHolder->activeStatusChanged(changedIdsResult.value(), active);
 
     return Result<QHash<int, QList<int>>>(returnedHashOfEntityWithActiveChangedIds);
 }

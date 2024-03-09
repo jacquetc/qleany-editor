@@ -69,8 +69,8 @@ Result<int> RemoveEntityCommandHandler::handleImpl(QPromise<Result<void>> &progr
 
     QLN_RETURN_IF_ERROR(int, deleteResult)
 
-    // repositories handle remove signals
-    // emit entityRemoved(deleteResult.value());
+    // repositories handle remove Q_SIGNALS
+    // Q_EMIT entityRemoved(deleteResult.value());
 
     qDebug() << "Entity removed:" << entityId;
 

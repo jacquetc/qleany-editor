@@ -6,6 +6,7 @@
 
 namespace QleanyEditor::Contracts::DTO::Project
 {
+using namespace Qt::Literals::StringLiterals;
 
 class ProjectRelationDTO
 {
@@ -24,16 +25,16 @@ public:
         bool positionSet = false;
         bool getSet(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("id")) {
+            if (fieldName == "id"_L1) {
                 return idSet;
             }
-            if (fieldName == QString::fromUtf8("relationField")) {
+            if (fieldName == "relationField"_L1) {
                 return relationFieldSet;
             }
-            if (fieldName == QString::fromUtf8("relatedIds")) {
+            if (fieldName == "relatedIds"_L1) {
                 return relatedIdsSet;
             }
-            if (fieldName == QString::fromUtf8("position")) {
+            if (fieldName == "position"_L1) {
                 return positionSet;
             }
             return false;

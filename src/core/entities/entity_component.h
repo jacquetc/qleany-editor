@@ -40,10 +40,10 @@ public:
 
         bool getSet(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("relativeFolderPath")) {
+            if (fieldName == "relativeFolderPath"_L1) {
                 return true;
             }
-            if (fieldName == QString::fromUtf8("entities")) {
+            if (fieldName == "entities"_L1) {
                 return entitiesSet;
             }
             return m_entity->CommonParent::metaData().getSet(fieldName);
@@ -51,10 +51,10 @@ public:
 
         bool getLoaded(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("relativeFolderPath")) {
+            if (fieldName == "relativeFolderPath"_L1) {
                 return true;
             }
-            if (fieldName == QString::fromUtf8("entities")) {
+            if (fieldName == "entities"_L1) {
                 return entitiesLoaded;
             }
             return m_entity->CommonParent::metaData().getLoaded(fieldName);
@@ -192,26 +192,26 @@ inline uint qHash(const EntityComponent &entity, uint seed = 0) noexcept
 
 /// Schema for EntityComponent entity
 inline Qleany::Entities::EntitySchema EntityComponent::schema = {QleanyEditor::Entities::Entities::EntityEnum::EntityComponent,
-                                                                 QString::fromUtf8("EntityComponent"),
+                                                                 "EntityComponent"_L1,
 
                                                                  // relationships:
                                                                  {{QleanyEditor::Entities::Entities::EntityEnum::EntityComponent,
-                                                                   QString::fromUtf8("EntityComponent"),
+                                                                   "EntityComponent"_L1,
                                                                    QleanyEditor::Entities::Entities::EntityEnum::Entity,
-                                                                   QString::fromUtf8("Entity"),
-                                                                   QString::fromUtf8("entities"),
+                                                                   "Entity"_L1,
+                                                                   "entities"_L1,
                                                                    RelationshipType::OneToMany,
                                                                    RelationshipStrength::Strong,
                                                                    RelationshipCardinality::ManyOrdered,
                                                                    RelationshipDirection::Forward}},
 
                                                                  // fields:
-                                                                 {{QString::fromUtf8("id"), FieldType::Integer, true, false},
-                                                                  {QString::fromUtf8("uuid"), FieldType::Uuid, false, false},
-                                                                  {QString::fromUtf8("creationDate"), FieldType::DateTime, false, false},
-                                                                  {QString::fromUtf8("updateDate"), FieldType::DateTime, false, false},
-                                                                  {QString::fromUtf8("relativeFolderPath"), FieldType::String, false, false},
-                                                                  {QString::fromUtf8("entities"), FieldType::Entity, false, true}}};
+                                                                 {{"id"_L1, FieldType::Integer, true, false},
+                                                                  {"uuid"_L1, FieldType::Uuid, false, false},
+                                                                  {"creationDate"_L1, FieldType::DateTime, false, false},
+                                                                  {"updateDate"_L1, FieldType::DateTime, false, false},
+                                                                  {"relativeFolderPath"_L1, FieldType::String, false, false},
+                                                                  {"entities"_L1, FieldType::Entity, false, true}}};
 
 } // namespace QleanyEditor::Entities
 Q_DECLARE_METATYPE(QleanyEditor::Entities::EntityComponent)

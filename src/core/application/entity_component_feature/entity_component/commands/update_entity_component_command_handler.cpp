@@ -90,10 +90,10 @@ Result<EntityComponentDTO> UpdateEntityComponentCommandHandler::handleImpl(QProm
     auto entityComponentDto =
         Qleany::Tools::AutoMapper::AutoMapper::map<QleanyEditor::Entities::EntityComponent, EntityComponentDTO>(entityComponentResult.value());
 
-    emit entityComponentUpdated(entityComponentDto);
+    Q_EMIT entityComponentUpdated(entityComponentDto);
 
     if (request.req.metaData().areDetailsSet()) {
-        emit entityComponentDetailsUpdated(entityComponentDto.id());
+        Q_EMIT entityComponentDetailsUpdated(entityComponentDto.id());
     }
 
     qDebug() << "UpdateEntityComponentCommandHandler::handleImpl done";
@@ -117,7 +117,7 @@ Result<EntityComponentDTO> UpdateEntityComponentCommandHandler::restoreImpl()
     auto entityComponentDto =
         Qleany::Tools::AutoMapper::AutoMapper::map<QleanyEditor::Entities::EntityComponent, EntityComponentDTO>(entityComponentResult.value());
 
-    emit entityComponentUpdated(entityComponentDto);
+    Q_EMIT entityComponentUpdated(entityComponentDto);
 
     qDebug() << "UpdateEntityComponentCommandHandler::restoreImpl done";
 

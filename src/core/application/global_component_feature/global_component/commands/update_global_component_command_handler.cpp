@@ -90,10 +90,10 @@ Result<GlobalComponentDTO> UpdateGlobalComponentCommandHandler::handleImpl(QProm
     auto globalComponentDto =
         Qleany::Tools::AutoMapper::AutoMapper::map<QleanyEditor::Entities::GlobalComponent, GlobalComponentDTO>(globalComponentResult.value());
 
-    emit globalComponentUpdated(globalComponentDto);
+    Q_EMIT globalComponentUpdated(globalComponentDto);
 
     if (request.req.metaData().areDetailsSet()) {
-        emit globalComponentDetailsUpdated(globalComponentDto.id());
+        Q_EMIT globalComponentDetailsUpdated(globalComponentDto.id());
     }
 
     qDebug() << "UpdateGlobalComponentCommandHandler::handleImpl done";
@@ -117,7 +117,7 @@ Result<GlobalComponentDTO> UpdateGlobalComponentCommandHandler::restoreImpl()
     auto globalComponentDto =
         Qleany::Tools::AutoMapper::AutoMapper::map<QleanyEditor::Entities::GlobalComponent, GlobalComponentDTO>(globalComponentResult.value());
 
-    emit globalComponentUpdated(globalComponentDto);
+    Q_EMIT globalComponentUpdated(globalComponentDto);
 
     qDebug() << "UpdateGlobalComponentCommandHandler::restoreImpl done";
 

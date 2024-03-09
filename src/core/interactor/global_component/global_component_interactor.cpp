@@ -40,7 +40,7 @@ GlobalComponentInteractor *GlobalComponentInteractor::instance()
 
 QCoro::Task<GlobalComponentDTO> GlobalComponentInteractor::get(int id) const
 {
-    auto queryCommand = new QueryCommand("get");
+    auto queryCommand = new QueryCommand("get"_L1);
 
     queryCommand->setQueryFunction([this, id](QPromise<Result<void>> &progressPromise) {
         GetGlobalComponentQuery query;
@@ -50,12 +50,12 @@ QCoro::Task<GlobalComponentDTO> GlobalComponentInteractor::get(int id) const
         auto result = handler.handle(progressPromise, query);
 
         if (result.isSuccess()) {
-            emit m_eventDispatcher->globalComponent()->getReplied(result.value());
+            Q_EMIT m_eventDispatcher->globalComponent()->getReplied(result.value());
         }
         return Result<void>(result.error());
     });
 
-    m_undo_redo_system->push(queryCommand, "globalComponent");
+    m_undo_redo_system->push(queryCommand, "globalComponent"_L1);
 
     // async wait for result signal
     const std::optional<GlobalComponentDTO> optional_result =
@@ -81,7 +81,7 @@ QCoro::Task<GlobalComponentDTO> GlobalComponentInteractor::update(const UpdateGl
 
     // connect
     QObject::connect(handler, &UpdateGlobalComponentCommandHandler::globalComponentUpdated, this, [this](GlobalComponentDTO dto) {
-        emit m_eventDispatcher->globalComponent()->updated(dto);
+        Q_EMIT m_eventDispatcher->globalComponent()->updated(dto);
     });
     QObject::connect(handler,
                      &UpdateGlobalComponentCommandHandler::globalComponentDetailsUpdated,
@@ -94,7 +94,7 @@ QCoro::Task<GlobalComponentDTO> GlobalComponentInteractor::update(const UpdateGl
                                                                                                        query);
 
     // push command
-    m_undo_redo_system->push(command, "globalComponent");
+    m_undo_redo_system->push(command, "globalComponent"_L1);
 
     // async wait for result signal
     const std::optional<GlobalComponentDTO> optional_result =

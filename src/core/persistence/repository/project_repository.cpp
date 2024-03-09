@@ -31,7 +31,7 @@ Result<QleanyEditor::Entities::Project> ProjectRepository::update(Entities::Proj
 
     if (entity.metaData().globalComponentSet) {
         Result<Entities::GlobalComponent> globalComponentResult =
-            m_globalComponentRepository->updateEntityInRelationOf(Entities::Project::schema, entity.id(), "globalComponent", entity.globalComponent());
+            m_globalComponentRepository->updateEntityInRelationOf(Entities::Project::schema, entity.id(), "globalComponent"_L1, entity.globalComponent());
 
 #ifdef QT_DEBUG
         if (globalComponentResult.isError()) {
@@ -57,7 +57,7 @@ Result<QleanyEditor::Entities::Project> ProjectRepository::getWithDetails(int en
     Entities::Project entity = getResult.value();
 
     Result<Entities::GlobalComponent> globalComponentResult =
-        m_globalComponentRepository->getEntityInRelationOf(Entities::Project::schema, entity.id(), "globalComponent");
+        m_globalComponentRepository->getEntityInRelationOf(Entities::Project::schema, entity.id(), "globalComponent"_L1);
 
 #ifdef QT_DEBUG
     if (globalComponentResult.isError()) {
@@ -84,7 +84,7 @@ QleanyEditor::Entities::Project::GlobalComponentLoader ProjectRepository::fetchG
 #endif
 
     return [this](int entityId) {
-        auto foreignEntityResult = m_globalComponentRepository->getEntityInRelationOf(QleanyEditor::Entities::Project::schema, entityId, "globalComponent");
+        auto foreignEntityResult = m_globalComponentRepository->getEntityInRelationOf(QleanyEditor::Entities::Project::schema, entityId, "globalComponent"_L1);
 
         if (foreignEntityResult.isError()) {
             qCritical() << foreignEntityResult.error().code() << foreignEntityResult.error().message() << foreignEntityResult.error().data();
@@ -104,7 +104,7 @@ Result<QHash<int, QList<int>>> ProjectRepository::removeInCascade(QList<int> ids
 
     Qleany::Entities::RelationshipInfo globalComponentGlobalComponentRelationship;
     for (const Qleany::Entities::RelationshipInfo &relationship : QleanyEditor::Entities::Project::schema.relationships) {
-        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::GlobalComponent && relationship.fieldName == "globalComponent") {
+        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::GlobalComponent && relationship.fieldName == "globalComponent"_L1) {
             globalComponentGlobalComponentRelationship = relationship;
             break;
         }
@@ -140,7 +140,7 @@ Result<QHash<int, QList<int>>> ProjectRepository::removeInCascade(QList<int> ids
 
     returnedHashOfEntityWithRemovedIds.insert(QleanyEditor::Entities::Entities::Project, removedIdsResult.value());
 
-    emit m_signalHolder->removed(removedIdsResult.value());
+    Q_EMIT m_signalHolder->removed(removedIdsResult.value());
 
     return Result<QHash<int, QList<int>>>(returnedHashOfEntityWithRemovedIds);
 }
@@ -154,7 +154,8 @@ Result<QHash<int, QList<int>>> ProjectRepository::changeActiveStatusInCascade(QL
 
     Qleany::Entities::RelationshipInfo globalComponentGlobalComponentRelationship;
     for (const Qleany::Entities::RelationshipInfo &relationship : QleanyEditor::Entities::Project::schema.relationships) {
-        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::GlobalComponent && relationship.fieldName == "globalComponent") {
+        if (relationship.rightEntityId == QleanyEditor::Entities::Entities::GlobalComponent
+            && relationship.fieldName == QString::fromLatin1("globalComponent")) {
             globalComponentGlobalComponentRelationship = relationship;
             break;
         }
@@ -189,7 +190,7 @@ Result<QHash<int, QList<int>>> ProjectRepository::changeActiveStatusInCascade(QL
     QLN_RETURN_IF_ERROR(QHash<int QLN_COMMA QList<int>>, changedIdsResult)
 
     returnedHashOfEntityWithActiveChangedIds.insert(QleanyEditor::Entities::Entities::Project, changedIdsResult.value());
-    emit m_signalHolder->activeStatusChanged(changedIdsResult.value(), active);
+    Q_EMIT m_signalHolder->activeStatusChanged(changedIdsResult.value(), active);
 
     return Result<QHash<int, QList<int>>>(returnedHashOfEntityWithActiveChangedIds);
 }

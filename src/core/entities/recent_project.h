@@ -34,10 +34,10 @@ public:
 
         bool getSet(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("fileName")) {
+            if (fieldName == "fileName"_L1) {
                 return true;
             }
-            if (fieldName == QString::fromUtf8("rootPath")) {
+            if (fieldName == "rootPath"_L1) {
                 return true;
             }
             return m_entity->CommonParent::metaData().getSet(fieldName);
@@ -45,10 +45,10 @@ public:
 
         bool getLoaded(const QString &fieldName) const
         {
-            if (fieldName == QString::fromUtf8("fileName")) {
+            if (fieldName == "fileName"_L1) {
                 return true;
             }
-            if (fieldName == QString::fromUtf8("rootPath")) {
+            if (fieldName == "rootPath"_L1) {
                 return true;
             }
             return m_entity->CommonParent::metaData().getLoaded(fieldName);
@@ -173,26 +173,26 @@ inline uint qHash(const RecentProject &entity, uint seed = 0) noexcept
 
 /// Schema for RecentProject entity
 inline Qleany::Entities::EntitySchema RecentProject::schema = {QleanyEditor::Entities::Entities::EntityEnum::RecentProject,
-                                                               QString::fromUtf8("RecentProject"),
+                                                               "RecentProject"_L1,
 
                                                                // relationships:
                                                                {{QleanyEditor::Entities::Entities::EntityEnum::Root,
-                                                                 QString::fromUtf8("Root"),
+                                                                 "Root"_L1,
                                                                  QleanyEditor::Entities::Entities::EntityEnum::RecentProject,
-                                                                 QString::fromUtf8("RecentProject"),
-                                                                 QString::fromUtf8("recentProjects"),
+                                                                 "RecentProject"_L1,
+                                                                 "recentProjects"_L1,
                                                                  RelationshipType::OneToMany,
                                                                  RelationshipStrength::Strong,
                                                                  RelationshipCardinality::ManyUnordered,
                                                                  RelationshipDirection::Backward}},
 
                                                                // fields:
-                                                               {{QString::fromUtf8("id"), FieldType::Integer, true, false},
-                                                                {QString::fromUtf8("uuid"), FieldType::Uuid, false, false},
-                                                                {QString::fromUtf8("creationDate"), FieldType::DateTime, false, false},
-                                                                {QString::fromUtf8("updateDate"), FieldType::DateTime, false, false},
-                                                                {QString::fromUtf8("fileName"), FieldType::String, false, false},
-                                                                {QString::fromUtf8("rootPath"), FieldType::String, false, false}}};
+                                                               {{"id"_L1, FieldType::Integer, true, false},
+                                                                {"uuid"_L1, FieldType::Uuid, false, false},
+                                                                {"creationDate"_L1, FieldType::DateTime, false, false},
+                                                                {"updateDate"_L1, FieldType::DateTime, false, false},
+                                                                {"fileName"_L1, FieldType::String, false, false},
+                                                                {"rootPath"_L1, FieldType::String, false, false}}};
 
 } // namespace QleanyEditor::Entities
 Q_DECLARE_METATYPE(QleanyEditor::Entities::RecentProject)

@@ -46,7 +46,7 @@ ProjectInteractor *ProjectInteractor::instance()
 
 QCoro::Task<ProjectDTO> ProjectInteractor::get(int id) const
 {
-    auto queryCommand = new QueryCommand("get");
+    auto queryCommand = new QueryCommand("get"_L1);
 
     queryCommand->setQueryFunction([this, id](QPromise<Result<void>> &progressPromise) {
         GetProjectQuery query;
@@ -56,12 +56,12 @@ QCoro::Task<ProjectDTO> ProjectInteractor::get(int id) const
         auto result = handler.handle(progressPromise, query);
 
         if (result.isSuccess()) {
-            emit m_eventDispatcher->project()->getReplied(result.value());
+            Q_EMIT m_eventDispatcher->project()->getReplied(result.value());
         }
         return Result<void>(result.error());
     });
 
-    m_undo_redo_system->push(queryCommand, "project");
+    m_undo_redo_system->push(queryCommand, "project"_L1);
 
     // async wait for result signal
     const std::optional<ProjectDTO> optional_result =
@@ -103,7 +103,7 @@ QCoro::Task<> ProjectInteractor::loadProject(LoadProjectDTO dto)
     m_eventDispatcher->progress()->bindToProgressSignals(command);
 
     // push command
-    m_undo_redo_system->push(command, "project");
+    m_undo_redo_system->push(command, "project"_L1);
 
     co_return;
 }
@@ -134,7 +134,7 @@ QCoro::Task<> ProjectInteractor::saveProject(SaveProjectDTO dto)
     m_eventDispatcher->progress()->bindToProgressSignals(command);
 
     // push command
-    m_undo_redo_system->push(command, "project");
+    m_undo_redo_system->push(command, "project"_L1);
 
     co_return;
 }
@@ -165,7 +165,7 @@ QCoro::Task<> ProjectInteractor::createProject(CreateProjectDTO dto)
     m_eventDispatcher->progress()->bindToProgressSignals(command);
 
     // push command
-    m_undo_redo_system->push(command, "project");
+    m_undo_redo_system->push(command, "project"_L1);
 
     co_return;
 }
@@ -192,7 +192,7 @@ QCoro::Task<> ProjectInteractor::closeProject()
     m_eventDispatcher->progress()->bindToProgressSignals(command);
 
     // push command
-    m_undo_redo_system->push(command, "project");
+    m_undo_redo_system->push(command, "project"_L1);
 
     co_return;
 }

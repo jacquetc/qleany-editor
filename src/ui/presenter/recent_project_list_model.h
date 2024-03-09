@@ -40,7 +40,7 @@ public:
 
     QHash<int, QByteArray> roleNames() const override;
 
-signals:
+Q_SIGNALS:
 
 private:
     void populate();

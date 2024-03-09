@@ -38,7 +38,7 @@ public:
 
     QString fileName() const;
 
-signals:
+Q_SIGNALS:
 
     void idChanged();
 

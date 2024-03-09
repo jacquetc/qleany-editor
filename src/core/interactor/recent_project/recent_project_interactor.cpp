@@ -41,7 +41,7 @@ RecentProjectInteractor *RecentProjectInteractor::instance()
 
 QCoro::Task<RecentProjectDTO> RecentProjectInteractor::get(int id) const
 {
-    auto queryCommand = new QueryCommand("get");
+    auto queryCommand = new QueryCommand("get"_L1);
 
     queryCommand->setQueryFunction([this, id](QPromise<Result<void>> &progressPromise) {
         GetRecentProjectQuery query;
@@ -51,12 +51,12 @@ QCoro::Task<RecentProjectDTO> RecentProjectInteractor::get(int id) const
         auto result = handler.handle(progressPromise, query);
 
         if (result.isSuccess()) {
-            emit m_eventDispatcher->recentProject()->getReplied(result.value());
+            Q_EMIT m_eventDispatcher->recentProject()->getReplied(result.value());
         }
         return Result<void>(result.error());
     });
 
-    m_undo_redo_system->push(queryCommand, "recentProject");
+    m_undo_redo_system->push(queryCommand, "recentProject"_L1);
 
     // async wait for result signal
     const std::optional<RecentProjectDTO> optional_result =
@@ -72,7 +72,7 @@ QCoro::Task<RecentProjectDTO> RecentProjectInteractor::get(int id) const
 
 QCoro::Task<QList<RecentProjectDTO>> RecentProjectInteractor::getAll() const
 {
-    auto queryCommand = new QueryCommand("getAll");
+    auto queryCommand = new QueryCommand("getAll"_L1);
 
     queryCommand->setQueryFunction([&](QPromise<Result<void>> &progressPromise) {
         auto interface = static_cast<InterfaceRecentProjectRepository *>(m_repositoryProvider->repository("RecentProject"));
@@ -80,11 +80,11 @@ QCoro::Task<QList<RecentProjectDTO>> RecentProjectInteractor::getAll() const
         auto result = handler.handle(progressPromise);
 
         if (result.isSuccess()) {
-            emit m_eventDispatcher->recentProject()->getAllReplied(result.value());
+            Q_EMIT m_eventDispatcher->recentProject()->getAllReplied(result.value());
         }
         return Result<void>(result.error());
     });
-    m_undo_redo_system->push(queryCommand, "recentProject");
+    m_undo_redo_system->push(queryCommand, "recentProject"_L1);
 
     // async wait for result signal
     const std::optional<QList<RecentProjectDTO>> optional_result =
@@ -116,7 +116,7 @@ QCoro::Task<bool> RecentProjectInteractor::remove(int id)
         new AlterCommand<RemoveRecentProjectCommandHandler, RemoveRecentProjectCommand>(RecentProjectInteractor::tr("Remove recentProject"), handler, query);
 
     // push command
-    m_undo_redo_system->push(command, "recentProject");
+    m_undo_redo_system->push(command, "recentProject"_L1);
 
     // async wait for result signal
     const std::optional<QList<int>> optional_result = co_await qCoro(repository->signalHolder(), &SignalHolder::removed, std::chrono::milliseconds(1000));

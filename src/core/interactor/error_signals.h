@@ -16,7 +16,7 @@ public:
     {
     }
 
-signals:
+Q_SIGNALS:
     void warningSent(const Qleany::Error &error);
     void errorSent(const Qleany::Error &error);
 };

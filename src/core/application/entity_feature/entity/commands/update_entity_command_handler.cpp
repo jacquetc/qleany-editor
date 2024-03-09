@@ -88,10 +88,10 @@ Result<EntityDTO> UpdateEntityCommandHandler::handleImpl(QPromise<Result<void>> 
     // map
     auto entityDto = Qleany::Tools::AutoMapper::AutoMapper::map<QleanyEditor::Entities::Entity, EntityDTO>(entityResult.value());
 
-    emit entityUpdated(entityDto);
+    Q_EMIT entityUpdated(entityDto);
 
     if (request.req.metaData().areDetailsSet()) {
-        emit entityDetailsUpdated(entityDto.id());
+        Q_EMIT entityDetailsUpdated(entityDto.id());
     }
 
     qDebug() << "UpdateEntityCommandHandler::handleImpl done";
@@ -114,7 +114,7 @@ Result<EntityDTO> UpdateEntityCommandHandler::restoreImpl()
     // map
     auto entityDto = Qleany::Tools::AutoMapper::AutoMapper::map<QleanyEditor::Entities::Entity, EntityDTO>(entityResult.value());
 
-    emit entityUpdated(entityDto);
+    Q_EMIT entityUpdated(entityDto);
 
     qDebug() << "UpdateEntityCommandHandler::restoreImpl done";
 

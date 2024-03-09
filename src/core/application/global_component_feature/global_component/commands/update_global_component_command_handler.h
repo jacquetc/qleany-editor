@@ -26,7 +26,7 @@ public:
     Result<GlobalComponentDTO> handle(QPromise<Result<void>> &progressPromise, const UpdateGlobalComponentCommand &request);
     Result<GlobalComponentDTO> restore();
 
-signals:
+Q_SIGNALS:
     void globalComponentUpdated(QleanyEditor::Contracts::DTO::GlobalComponent::GlobalComponentDTO globalComponentDto);
     void globalComponentDetailsUpdated(int id);
 

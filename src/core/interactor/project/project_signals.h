@@ -24,7 +24,7 @@ public:
     {
     }
 
-signals:
+Q_SIGNALS:
     void removed(QList<int> removedIds);
     void activeStatusChanged(QList<int> changedIds, bool isActive);
     void created(ProjectDTO dto);

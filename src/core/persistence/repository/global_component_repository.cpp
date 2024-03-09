@@ -37,7 +37,7 @@ Result<QHash<int, QList<int>>> GlobalComponentRepository::removeInCascade(QList<
 
     returnedHashOfEntityWithRemovedIds.insert(QleanyEditor::Entities::Entities::GlobalComponent, removedIdsResult.value());
 
-    emit m_signalHolder->removed(removedIdsResult.value());
+    Q_EMIT m_signalHolder->removed(removedIdsResult.value());
 
     return Result<QHash<int, QList<int>>>(returnedHashOfEntityWithRemovedIds);
 }
@@ -54,7 +54,7 @@ Result<QHash<int, QList<int>>> GlobalComponentRepository::changeActiveStatusInCa
     QLN_RETURN_IF_ERROR(QHash<int QLN_COMMA QList<int>>, changedIdsResult)
 
     returnedHashOfEntityWithActiveChangedIds.insert(QleanyEditor::Entities::Entities::GlobalComponent, changedIdsResult.value());
-    emit m_signalHolder->activeStatusChanged(changedIdsResult.value(), active);
+    Q_EMIT m_signalHolder->activeStatusChanged(changedIdsResult.value(), active);
 
     return Result<QHash<int, QList<int>>>(returnedHashOfEntityWithActiveChangedIds);
 }
