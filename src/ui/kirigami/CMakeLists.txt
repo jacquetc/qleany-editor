@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause SPDX-FileCopyrightText: %{CURRENT_YEAR}
 # %{AUTHOR} <%{EMAIL}>
 
+option(BUILD_WITH_MOCKS "Build with mocks" OFF)
+
 # Target: static library
 qt_add_qml_module(
   qleany-editor_static
@@ -12,6 +14,8 @@ qt_add_qml_module(
   QML_FILES
   contents/ui/Main.qml
   contents/ui/About.qml
+  contents/ui/Index.qml
+  contents/ui/WelcomePage.qml
   SOURCES
   app.cpp)
 
@@ -37,7 +41,9 @@ target_link_libraries(
          KF6::ConfigGui)
 target_include_directories(qleany-editor_static PUBLIC ${CMAKE_BINARY_DIR})
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/realqmlmodules.cmake)
+if(NOT BUILD_WITH_MOCKS)
+  include(${CMAKE_CURRENT_SOURCE_DIR}/realqmlmodules.cmake)
+endif()
 
 if(ANDROID)
   kirigami_package_breeze_icons(ICONS list-add help-about application-exit
@@ -51,6 +57,14 @@ kconfig_add_kcfg_files(qleany-editor_static GENERATE_MOC
 
 # Target: main executable
 add_executable(qleany-editor main.cpp)
+
+if(BUILD_WITH_MOCKS)
+  # copy mock_imports in binary folder
+  file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/mock_imports
+       DESTINATION ${CMAKE_BINARY_DIR}/bin)
+  target_compile_definitions(qleany-editor PRIVATE BUILD_WITH_MOCKS)
+endif()
+
 target_link_libraries(qleany-editor PUBLIC qleany-editor_static
                                            qleany-editor_staticplugin)
 install(TARGETS qleany-editor ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

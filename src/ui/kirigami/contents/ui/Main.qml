@@ -2,8 +2,11 @@
 // SPDX-FileCopyrightText: %{CURRENT_YEAR} %{AUTHOR} <%{EMAIL}>
 
 import QtQuick
+import QtCore
 import QtQuick.Controls as Controls
 import QtQuick.Layouts
+import QtQuick.Dialogs
+
 import org.kde.kirigami as Kirigami
 import Interactors
 import org.kde.qleanyeditor
@@ -37,25 +40,41 @@ Kirigami.ApplicationWindow {
 
     property int counter: 0
 
+    FileDialog {
+        id: loadProjectFileDialog
+        title: i18n("Load project")
+        nameFilters: ["YAML files (*.yaml)"]
+        currentFolder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
+        onAccepted: {
+            var file = loadProjectFileDialog.selectedFile
+            if (file) {
+                var dto = ProjectInteractor.getLoadProjectDTO()
+                dto.fileName = file
+                console.log("loading project")
+                ProjectInteractor.loadProject(dto).then(
+                            function() {
+                        console.log("project loaded")
+                    }
+                )
+            }
+        }
+    }
+
     globalDrawer: Kirigami.GlobalDrawer {
+        title: i18n("Qleany Editor")
+
         isMenu: !Kirigami.Settings.isMobile
         actions: [
             Kirigami.Action {
                 text: i18n("Load project")
                 icon.name: "list-add"
-                onTriggered: {
-                    console.log("eee")
-                    var dto = ProjectInteractor.getLoadProjectDTO()
-                    dto.fileName = ""
-                    ProjectInteractor.loadProject(dto)
-                    console.log("eee")
-}
+                onTriggered: loadProjectFileDialog.open()}
 
-            },
+            ,
             Kirigami.Action {
                 text: i18n("About qleany-editor")
                 icon.name: "help-about"
-                onTriggered: root.pageStack.pushDialogLayer("qrc:About.qml")
+                onTriggered: root.pageStack.pushDialogLayer("About.qml")
             },
             Kirigami.Action {
                 text: i18n("Quit")
@@ -69,37 +88,9 @@ Kirigami.ApplicationWindow {
         id: contextDrawer
     }
 
-    pageStack.initialPage: page
-
-    Kirigami.Page {
-        id: page
-
-        title: i18n("Main Page")
-
-        actions: [
-            Kirigami.Action {
-                text: i18n("Plus One")
-                icon.name: "list-add"
-                tooltip: i18n("Add one to the counter")
-                onTriggered: root.counter += 1
-            }
-        ]
-
-        ColumnLayout {
-            width: page.width
-
-            anchors.centerIn: parent
-
-            Kirigami.Heading {
-                Layout.alignment: Qt.AlignCenter
-                text: root.counter === 0 ? i18n("Hello, World!") : root.counter
-            }
-
-            Controls.Button {
-                Layout.alignment: Qt.AlignHCenter
-                text: i18n("+ 1")
-                onClicked: root.counter += 1
-            }
-        }
+    WelcomePage {
+        id: welcomePage
     }
+
+    pageStack.initialPage: welcomePage
 }
