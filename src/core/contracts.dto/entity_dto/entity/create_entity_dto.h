@@ -2,10 +2,15 @@
 // If you do, be careful to not overwrite it when you run the generator again.
 #pragma once
 
+#include "entity_field/entity_field_dto.h"
+#include "entity_parent/entity_parent_dto.h"
 #include <QDateTime>
 #include <QObject>
 #include <QString>
 #include <QUuid>
+
+using namespace QleanyEditor::Contracts::DTO::EntityParent;
+using namespace QleanyEditor::Contracts::DTO::EntityField;
 
 namespace QleanyEditor::Contracts::DTO::Entity
 {
@@ -19,6 +24,9 @@ class CreateEntityDTO
     Q_PROPERTY(QDateTime creationDate READ creationDate WRITE setCreationDate)
     Q_PROPERTY(QDateTime updateDate READ updateDate WRITE setUpdateDate)
     Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(EntityParentDTO parent READ parent WRITE setParent)
+    Q_PROPERTY(QList<EntityFieldDTO> fields READ fields WRITE setFields)
+    Q_PROPERTY(bool onlyForHeritage READ onlyForHeritage WRITE setOnlyForHeritage)
     Q_PROPERTY(int entityComponentId READ entityComponentId WRITE setEntityComponentId)
     Q_PROPERTY(int position READ position WRITE setPosition)
 
@@ -28,6 +36,9 @@ public:
         bool creationDateSet = false;
         bool updateDateSet = false;
         bool nameSet = false;
+        bool parentSet = false;
+        bool fieldsSet = false;
+        bool onlyForHeritageSet = false;
         bool entityComponentIdSet = false;
         bool positionSet = false;
         bool getSet(const QString &fieldName) const
@@ -44,6 +55,15 @@ public:
             if (fieldName == "name"_L1) {
                 return nameSet;
             }
+            if (fieldName == "parent"_L1) {
+                return parentSet;
+            }
+            if (fieldName == "fields"_L1) {
+                return fieldsSet;
+            }
+            if (fieldName == "onlyForHeritage"_L1) {
+                return onlyForHeritageSet;
+            }
             if (fieldName == "entityComponentId"_L1) {
                 return entityComponentIdSet;
             }
@@ -55,6 +75,12 @@ public:
 
         bool areDetailsSet() const
         {
+            if (parentSet)
+                return true;
+
+            if (fieldsSet)
+                return true;
+
             return false;
         }
     };
@@ -64,6 +90,7 @@ public:
         , m_creationDate(QDateTime())
         , m_updateDate(QDateTime())
         , m_name(QString())
+        , m_onlyForHeritage(false)
         , m_entityComponentId(0)
         , m_position(0)
     {
@@ -73,11 +100,22 @@ public:
     {
     }
 
-    CreateEntityDTO(const QUuid &uuid, const QDateTime &creationDate, const QDateTime &updateDate, const QString &name, int entityComponentId, int position)
+    CreateEntityDTO(const QUuid &uuid,
+                    const QDateTime &creationDate,
+                    const QDateTime &updateDate,
+                    const QString &name,
+                    const EntityParentDTO &parent,
+                    const QList<EntityFieldDTO> &fields,
+                    bool onlyForHeritage,
+                    int entityComponentId,
+                    int position)
         : m_uuid(uuid)
         , m_creationDate(creationDate)
         , m_updateDate(updateDate)
         , m_name(name)
+        , m_parent(parent)
+        , m_fields(fields)
+        , m_onlyForHeritage(onlyForHeritage)
         , m_entityComponentId(entityComponentId)
         , m_position(position)
     {
@@ -89,6 +127,9 @@ public:
         , m_creationDate(other.m_creationDate)
         , m_updateDate(other.m_updateDate)
         , m_name(other.m_name)
+        , m_parent(other.m_parent)
+        , m_fields(other.m_fields)
+        , m_onlyForHeritage(other.m_onlyForHeritage)
         , m_entityComponentId(other.m_entityComponentId)
         , m_position(other.m_position)
     {
@@ -102,6 +143,9 @@ public:
             m_creationDate = other.m_creationDate;
             m_updateDate = other.m_updateDate;
             m_name = other.m_name;
+            m_parent = other.m_parent;
+            m_fields = other.m_fields;
+            m_onlyForHeritage = other.m_onlyForHeritage;
             m_entityComponentId = other.m_entityComponentId;
             m_position = other.m_position;
         }
@@ -116,6 +160,9 @@ public:
             m_creationDate = other.m_creationDate;
             m_updateDate = other.m_updateDate;
             m_name = other.m_name;
+            m_parent = other.m_parent;
+            m_fields = other.m_fields;
+            m_onlyForHeritage = other.m_onlyForHeritage;
             m_entityComponentId = other.m_entityComponentId;
             m_position = other.m_position;
         }
@@ -140,6 +187,18 @@ public:
             if (other.m_metaData.nameSet) {
                 m_name = other.m_name;
                 m_metaData.nameSet = true;
+            }
+            if (other.m_metaData.parentSet) {
+                m_parent = other.m_parent;
+                m_metaData.parentSet = true;
+            }
+            if (other.m_metaData.fieldsSet) {
+                m_fields = other.m_fields;
+                m_metaData.fieldsSet = true;
+            }
+            if (other.m_metaData.onlyForHeritageSet) {
+                m_onlyForHeritage = other.m_onlyForHeritage;
+                m_metaData.onlyForHeritageSet = true;
             }
             if (other.m_metaData.entityComponentIdSet) {
                 m_entityComponentId = other.m_entityComponentId;
@@ -215,6 +274,45 @@ public:
         m_metaData.nameSet = true;
     }
 
+    // ------ parent : -----
+
+    EntityParentDTO parent() const
+    {
+        return m_parent;
+    }
+
+    void setParent(const EntityParentDTO &parent)
+    {
+        m_parent = parent;
+        m_metaData.parentSet = true;
+    }
+
+    // ------ fields : -----
+
+    QList<EntityFieldDTO> fields() const
+    {
+        return m_fields;
+    }
+
+    void setFields(const QList<EntityFieldDTO> &fields)
+    {
+        m_fields = fields;
+        m_metaData.fieldsSet = true;
+    }
+
+    // ------ onlyForHeritage : -----
+
+    bool onlyForHeritage() const
+    {
+        return m_onlyForHeritage;
+    }
+
+    void setOnlyForHeritage(bool onlyForHeritage)
+    {
+        m_onlyForHeritage = onlyForHeritage;
+        m_metaData.onlyForHeritageSet = true;
+    }
+
     // ------ entityComponentId : -----
 
     int entityComponentId() const
@@ -253,6 +351,9 @@ private:
     QDateTime m_creationDate;
     QDateTime m_updateDate;
     QString m_name;
+    EntityParentDTO m_parent;
+    QList<EntityFieldDTO> m_fields;
+    bool m_onlyForHeritage;
     int m_entityComponentId;
     int m_position;
 };
@@ -260,6 +361,7 @@ private:
 inline bool operator==(const CreateEntityDTO &lhs, const CreateEntityDTO &rhs)
 {
     return lhs.m_uuid == rhs.m_uuid && lhs.m_creationDate == rhs.m_creationDate && lhs.m_updateDate == rhs.m_updateDate && lhs.m_name == rhs.m_name
+        && lhs.m_parent == rhs.m_parent && lhs.m_fields == rhs.m_fields && lhs.m_onlyForHeritage == rhs.m_onlyForHeritage
         && lhs.m_entityComponentId == rhs.m_entityComponentId && lhs.m_position == rhs.m_position;
 }
 
@@ -272,6 +374,9 @@ inline uint qHash(const CreateEntityDTO &dto, uint seed = 0) noexcept
     hash ^= ::qHash(dto.m_creationDate, seed);
     hash ^= ::qHash(dto.m_updateDate, seed);
     hash ^= ::qHash(dto.m_name, seed);
+    hash ^= ::qHash(dto.m_parent, seed);
+    hash ^= ::qHash(dto.m_fields, seed);
+    hash ^= ::qHash(dto.m_onlyForHeritage, seed);
     hash ^= ::qHash(dto.m_entityComponentId, seed);
     hash ^= ::qHash(dto.m_position, seed);
 

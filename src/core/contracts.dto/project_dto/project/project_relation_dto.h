@@ -46,7 +46,19 @@ public:
         }
     };
 
-    enum RelationField { Undefined, GlobalComponent };
+    enum RelationField {
+        Undefined,
+        GlobalComponent,
+        EntityComponent,
+        RepositoryComponent,
+        InteractorComponent,
+        ApplicationComponent,
+        DtoComponent,
+        CqrsComponent,
+        ContractsComponent,
+        PresenterComponent,
+        FrontEndComponent
+    };
     Q_ENUM(RelationField);
 
     ProjectRelationDTO()

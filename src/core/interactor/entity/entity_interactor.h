@@ -4,6 +4,7 @@
 
 #include "entity/create_entity_dto.h"
 #include "entity/entity_dto.h"
+#include "entity/entity_with_details_dto.h"
 #include "entity/update_entity_dto.h"
 #include "event_dispatcher.h"
 #include "qleany_editor_interactor_export.h"
@@ -33,6 +34,8 @@ public:
     static EntityInteractor *instance();
 
     Q_INVOKABLE QCoro::Task<EntityDTO> get(int id) const;
+
+    Q_INVOKABLE QCoro::Task<EntityWithDetailsDTO> getWithDetails(int id) const;
 
     Q_INVOKABLE static Contracts::DTO::Entity::CreateEntityDTO getCreateDTO();
 

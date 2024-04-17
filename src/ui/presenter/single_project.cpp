@@ -37,6 +37,10 @@ SingleProject::SingleProject(QObject *parent)
                 m_fileName = dto.fileName();
                 Q_EMIT fileNameChanged();
             }
+            if (m_rootPath != dto.rootPath()) {
+                m_rootPath = dto.rootPath();
+                Q_EMIT rootPathChanged();
+            }
         }
     });
 }
@@ -67,6 +71,9 @@ void SingleProject::setId(int newId)
         m_fileName = QString{};
         Q_EMIT fileNameChanged();
 
+        m_rootPath = QString{};
+        Q_EMIT rootPathChanged();
+
     }
 
     // set
@@ -88,6 +95,9 @@ void SingleProject::setId(int newId)
 
             m_fileName = project.fileName();
             Q_EMIT fileNameChanged();
+
+            m_rootPath = project.rootPath();
+            Q_EMIT rootPathChanged();
         });
     }
 }
@@ -115,4 +125,9 @@ QDateTime SingleProject::updateDate() const
 QString SingleProject::fileName() const
 {
     return m_fileName;
+}
+
+QString SingleProject::rootPath() const
+{
+    return m_rootPath;
 }

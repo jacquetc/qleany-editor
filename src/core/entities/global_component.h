@@ -34,8 +34,10 @@ public:
         MetaData(GlobalComponent *entity, const MetaData &other)
             : m_entity(entity)
         {
+            Q_UNUSED(other);
         }
 
+        // Getters for the fields' metadata. Normal fields are always set, but lazy-loaded fields may not be
         bool getSet(const QString &fieldName) const
         {
             if (fieldName == "applicationName"_L1) {
@@ -50,9 +52,11 @@ public:
             if (fieldName == "organisationDomain"_L1) {
                 return true;
             }
+            // If the field is not found, we delegate to the parent class
             return m_entity->CommonParent::metaData().getSet(fieldName);
         }
 
+        // Getters for the fields' metadata. Normal fields are always set, but lazy-loaded fields may not be
         bool getLoaded(const QString &fieldName) const
         {
             if (fieldName == "applicationName"_L1) {
@@ -67,6 +71,7 @@ public:
             if (fieldName == "organisationDomain"_L1) {
                 return true;
             }
+            // If the field is not found, we delegate to the parent class
             return m_entity->CommonParent::metaData().getLoaded(fieldName);
         }
 
@@ -76,11 +81,11 @@ public:
 
     GlobalComponent()
         : CommonParent()
+        , m_metaData(this)
         , m_applicationName(QString())
         , m_applicationCppDomainName(QString())
         , m_organisationName(QString())
         , m_organisationDomain(QString())
-        , m_metaData(this)
     {
     }
 
@@ -97,11 +102,11 @@ public:
                     const QString &organisationName,
                     const QString &organisationDomain)
         : CommonParent(id, uuid, creationDate, updateDate)
+        , m_metaData(this)
         , m_applicationName(applicationName)
         , m_applicationCppDomainName(applicationCppDomainName)
         , m_organisationName(organisationName)
         , m_organisationDomain(organisationDomain)
-        , m_metaData(this)
     {
     }
 

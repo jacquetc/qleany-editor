@@ -20,6 +20,7 @@ class ProjectDTO
     Q_PROPERTY(QDateTime creationDate READ creationDate WRITE setCreationDate)
     Q_PROPERTY(QDateTime updateDate READ updateDate WRITE setUpdateDate)
     Q_PROPERTY(QString fileName READ fileName WRITE setFileName)
+    Q_PROPERTY(QString rootPath READ rootPath WRITE setRootPath)
 
 public:
     struct MetaData {
@@ -28,6 +29,7 @@ public:
         bool creationDateSet = false;
         bool updateDateSet = false;
         bool fileNameSet = false;
+        bool rootPathSet = false;
         bool getSet(const QString &fieldName) const
         {
             if (fieldName == "id"_L1) {
@@ -45,6 +47,9 @@ public:
             if (fieldName == "fileName"_L1) {
                 return fileNameSet;
             }
+            if (fieldName == "rootPath"_L1) {
+                return rootPathSet;
+            }
             return false;
         }
 
@@ -60,6 +65,7 @@ public:
         , m_creationDate(QDateTime())
         , m_updateDate(QDateTime())
         , m_fileName(QString())
+        , m_rootPath(QString())
     {
     }
 
@@ -67,12 +73,13 @@ public:
     {
     }
 
-    ProjectDTO(int id, const QUuid &uuid, const QDateTime &creationDate, const QDateTime &updateDate, const QString &fileName)
+    ProjectDTO(int id, const QUuid &uuid, const QDateTime &creationDate, const QDateTime &updateDate, const QString &fileName, const QString &rootPath)
         : m_id(id)
         , m_uuid(uuid)
         , m_creationDate(creationDate)
         , m_updateDate(updateDate)
         , m_fileName(fileName)
+        , m_rootPath(rootPath)
     {
     }
 
@@ -83,6 +90,7 @@ public:
         , m_creationDate(other.m_creationDate)
         , m_updateDate(other.m_updateDate)
         , m_fileName(other.m_fileName)
+        , m_rootPath(other.m_rootPath)
     {
     }
 
@@ -110,6 +118,7 @@ public:
             m_creationDate = other.m_creationDate;
             m_updateDate = other.m_updateDate;
             m_fileName = other.m_fileName;
+            m_rootPath = other.m_rootPath;
         }
         return *this;
     }
@@ -123,6 +132,7 @@ public:
             m_creationDate = other.m_creationDate;
             m_updateDate = other.m_updateDate;
             m_fileName = other.m_fileName;
+            m_rootPath = other.m_rootPath;
         }
         return *this;
     }
@@ -149,6 +159,10 @@ public:
             if (other.m_metaData.fileNameSet) {
                 m_fileName = other.m_fileName;
                 m_metaData.fileNameSet = true;
+            }
+            if (other.m_metaData.rootPathSet) {
+                m_rootPath = other.m_rootPath;
+                m_metaData.rootPathSet = true;
             }
         }
         return *this;
@@ -229,6 +243,19 @@ public:
         m_metaData.fileNameSet = true;
     }
 
+    // ------ rootPath : -----
+
+    QString rootPath() const
+    {
+        return m_rootPath;
+    }
+
+    void setRootPath(const QString &rootPath)
+    {
+        m_rootPath = rootPath;
+        m_metaData.rootPathSet = true;
+    }
+
     MetaData metaData() const
     {
         return m_metaData;
@@ -242,12 +269,13 @@ private:
     QDateTime m_creationDate;
     QDateTime m_updateDate;
     QString m_fileName;
+    QString m_rootPath;
 };
 
 inline bool operator==(const ProjectDTO &lhs, const ProjectDTO &rhs)
 {
     return lhs.m_id == rhs.m_id && lhs.m_uuid == rhs.m_uuid && lhs.m_creationDate == rhs.m_creationDate && lhs.m_updateDate == rhs.m_updateDate
-        && lhs.m_fileName == rhs.m_fileName;
+        && lhs.m_fileName == rhs.m_fileName && lhs.m_rootPath == rhs.m_rootPath;
 }
 
 inline uint qHash(const ProjectDTO &dto, uint seed = 0) noexcept
@@ -260,6 +288,7 @@ inline uint qHash(const ProjectDTO &dto, uint seed = 0) noexcept
     hash ^= ::qHash(dto.m_creationDate, seed);
     hash ^= ::qHash(dto.m_updateDate, seed);
     hash ^= ::qHash(dto.m_fileName, seed);
+    hash ^= ::qHash(dto.m_rootPath, seed);
 
     return hash;
 }

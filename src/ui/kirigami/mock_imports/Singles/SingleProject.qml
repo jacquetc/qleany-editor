@@ -12,6 +12,7 @@ QtObject {
         creationDate: "2020-01-01T00:00:00"
         updateDate: "2020-01-01T00:00:00"
         fileName: "example"
+        rootPath: "example"
     }
 
     ListElement {
@@ -21,6 +22,7 @@ QtObject {
         creationDate: "2020-01-01T00:00:00"
         updateDate: "2020-01-01T00:00:00"
         fileName: "example"
+        rootPath: "example"
     }
 
     ListElement {
@@ -30,6 +32,7 @@ QtObject {
         creationDate: "2020-01-01T00:00:00"
         updateDate: "2020-01-01T00:00:00"
         fileName: "example"
+        rootPath: "example"
     }
 
     ListElement {
@@ -39,6 +42,7 @@ QtObject {
         creationDate: "2020-01-01T00:00:00"
         updateDate: "2020-01-01T00:00:00"
         fileName: "example"
+        rootPath: "example"
     }
 
     ListElement {
@@ -48,6 +52,7 @@ QtObject {
         creationDate: "2020-01-01T00:00:00"
         updateDate: "2020-01-01T00:00:00"
         fileName: "example"
+        rootPath: "example"
     }
 
 

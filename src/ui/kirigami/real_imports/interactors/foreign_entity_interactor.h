@@ -26,6 +26,11 @@ public:
         return s_interactorInstance->get(id);
     }
 
+    Q_INVOKABLE QCoro::QmlTask getWithDetails(int id) const
+    {
+        return s_interactorInstance->get(id);
+    }
+
     Q_INVOKABLE CreateEntityDTO getCreateDTO()
     {
         return s_interactorInstance->getCreateDTO();

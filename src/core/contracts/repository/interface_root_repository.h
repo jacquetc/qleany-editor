@@ -23,7 +23,7 @@ public:
     {
     }
 
-    virtual Result<QleanyEditor::Entities::Root> update(QleanyEditor::Entities::Root &&entity) = 0;
+    virtual Result<QleanyEditor::Entities::Root> update(QleanyEditor::Entities::Root &&entity) override = 0;
     virtual Result<QleanyEditor::Entities::Root> getWithDetails(int entityId) = 0;
 
     virtual QleanyEditor::Entities::Root::ProjectLoader fetchProjectLoader() = 0;

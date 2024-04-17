@@ -21,6 +21,19 @@ QtObject {
         return task
     }
 
+    function getWithDetails(id) {
+        // mocking QCoro::Task
+        var component = Qt.createComponent("QCoroQmlTask.qml");
+        if (component.status === Component.Ready) {
+            var task = component.createObject(interactor);
+            task.setValue(dto);
+            task.setDelay(50);
+            task.setSignalFn(function(){EventDispatcher.entity().getWithDetailsReplied(id)})
+        }
+
+        return task
+    }
+
     function getCreateDTO() {
         return {
             "content": "Entity 1"

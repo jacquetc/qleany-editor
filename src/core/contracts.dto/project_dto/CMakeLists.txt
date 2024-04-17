@@ -25,9 +25,27 @@ set_target_properties(${LIBRARY_NAME} PROPERTIES
                     
 set_target_properties(${LIBRARY_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
+add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-interactor-component)
+add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-entity-component)
+add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-d-t-o-component)
+add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-repository-component)
 add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-global-component)
+add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-presenter-component)
+add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-application-component)
+add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-c-q-r-s-component)
+add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-front-end-component)
+add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-contracts-component)
 
+target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-interactor-component)
+target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-entity-component)
+target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-d-t-o-component)
+target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-repository-component)
 target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-global-component)
+target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-presenter-component)
+target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-application-component)
+target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-c-q-r-s-component)
+target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-front-end-component)
+target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-contracts-component)
 
 
 target_link_libraries(${LIBRARY_NAME}

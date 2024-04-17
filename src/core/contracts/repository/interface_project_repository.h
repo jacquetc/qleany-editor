@@ -23,10 +23,28 @@ public:
     {
     }
 
-    virtual Result<QleanyEditor::Entities::Project> update(QleanyEditor::Entities::Project &&entity) = 0;
+    virtual Result<QleanyEditor::Entities::Project> update(QleanyEditor::Entities::Project &&entity) override = 0;
     virtual Result<QleanyEditor::Entities::Project> getWithDetails(int entityId) = 0;
 
+    virtual QleanyEditor::Entities::Project::ApplicationComponentLoader fetchApplicationComponentLoader() = 0;
+
+    virtual QleanyEditor::Entities::Project::CqrsComponentLoader fetchCqrsComponentLoader() = 0;
+
+    virtual QleanyEditor::Entities::Project::ContractsComponentLoader fetchContractsComponentLoader() = 0;
+
+    virtual QleanyEditor::Entities::Project::DtoComponentLoader fetchDtoComponentLoader() = 0;
+
+    virtual QleanyEditor::Entities::Project::EntityComponentLoader fetchEntityComponentLoader() = 0;
+
     virtual QleanyEditor::Entities::Project::GlobalComponentLoader fetchGlobalComponentLoader() = 0;
+
+    virtual QleanyEditor::Entities::Project::InteractorComponentLoader fetchInteractorComponentLoader() = 0;
+
+    virtual QleanyEditor::Entities::Project::PresenterComponentLoader fetchPresenterComponentLoader() = 0;
+
+    virtual QleanyEditor::Entities::Project::FrontEndComponentLoader fetchFrontEndComponentLoader() = 0;
+
+    virtual QleanyEditor::Entities::Project::RepositoryComponentLoader fetchRepositoryComponentLoader() = 0;
 
     virtual Result<QHash<int, QList<int>>> removeInCascade(QList<int> ids) = 0;
     virtual Result<QHash<int, QList<int>>> changeActiveStatusInCascade(QList<int> ids, bool active) = 0;

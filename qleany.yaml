@@ -22,6 +22,7 @@ entities:
           name: creationDate
         - type: QDateTime
           name: updateDate
+
     - name: Root
       parent: CommonParent
       fields:
@@ -36,6 +37,7 @@ entities:
         - type: Project
           name: project
           strong: true
+
     - name: RecentProject
       parent: CommonParent
       fields:
@@ -43,14 +45,45 @@ entities:
           name: fileName
         - type: QString
           name: rootPath
+
     - name: Project
       parent: CommonParent
       fields:
         - type: QString
           name: fileName
+        - type: QString
+          name: rootPath
         - type: GlobalComponent
           name: globalComponent
           strong: true
+        - type: EntityComponent
+          name: entityComponent
+          strong: true
+        - type: RepositoryComponent
+          name: repositoryComponent
+          strong: true
+        - type: InteractorComponent
+          name: interactorComponent
+          strong: true
+        - type: ApplicationComponent
+          name: applicationComponent
+          strong: true
+        - type: DTOComponent
+          name: dtoComponent
+          strong: true
+        - type: CQRSComponent
+          name: cqrsComponent
+          strong: true
+        - type: ContractsComponent
+          name: contractsComponent
+          strong: true
+        - type: PresenterComponent
+          name: presenterComponent
+          strong: true
+        - type: QList<FrontEndComponent>
+          name: frontEndComponent
+          strong: true
+
     - name: GlobalComponent
       parent: CommonParent
       fields:
@@ -62,6 +95,7 @@ entities:
           name: organisationName
         - type: QString
           name: organisationDomain
+
     - name: EntityComponent
       parent: CommonParent
       fields:
@@ -71,12 +105,248 @@ entities:
           name: entities
           ordered: true
           strong: true
+
     - name: Entity
       parent: CommonParent
       fields:
         - type: QString
           name: name
+        - type: EntityParent
+          name: parent
+          strong: true
+        - type: QList<EntityField>
+          name: fields
+          ordered: true
+          strong: true
+        - type: bool
+          name: onlyForHeritage
+
+    - name: EntityParent
+      parent: CommonParent
+      fields:
+        - type: int
+          name: parent
+
+    - name: EntityField
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: type
+        - type: QString
+          name: name
+        - type: bool
+          name: ordered
+        - type: bool
+          name: strong
+
+    - name: RepositoryComponent
+      parent: CommonParent
+      fields:
+        - type: QList<Repository>
+          name: repositories
+          ordered: true
+          strong: true
+        - type: QString
+          name: repositoryFolderPath
+        - type: QString
+          name: baseFolderPath
         
+    - name: Repository
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: entityName
+        - type: bool
+          name: lazyLoaders
+        - type: Entity
+          name: entity
+
+    - name: InteractorComponent
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: folderPath
+        - type: bool
+          name: createUndoRedoInteractor
+
+    - name: ApplicationComponent
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: commonCMakeFolderPath
+        - type: QList<ApplicationFeature>
+          name: features
+          ordered: true
+          strong: true
+
+    - name: ApplicationFeature
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: name
+        - type: Entity
+          name: dtoIdenticalToEntity
+        - type: CRUD
+          name: crud
+          strong: true
+        - type: QList<CustomCommand>
+          name: customCommands
+          ordered: true
+          strong: true
+        - type: QList<CustomQuery>
+          name: customQueries
+          ordered: true
+          strong: true
+    
+    - name: CRUD
+      parent: CommonParent
+      fields:
+        - type: bool
+          name: enabled
+        - type: Entity
+          name: entityMappableWith
+        - type: bool
+          name: getEnabled
+        - type: bool
+          name: getAllEnabled
+        - type: bool
+          name: getWithDetailsEnabled
+        - type: bool
+          name: createEnabled
+        - type: bool
+          name: updateEnabled
+        - type: bool
+          name: removeEnabled
+
+    - name: CustomCommand
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: name
+        - type: QList<Entity>
+          name: entities
+          ordered: true
+        - type: bool
+          name: validator
+        - type: bool
+          name: undo
+        - type: CustomDTO
+          name: dtoIn
+          strong: true
+        - type: CustomDTO
+          name: dtoOut
+          strong: true
+
+
+    - name: CustomDTO
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: typePrefix
+        - type: QList<CustomDTOField>
+          name: fields
+          ordered: true
+          strong: true
+    
+    - name: CustomDTOField
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: type
+        - type: QString
+          name: name
+
+    - name: CustomQuery
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: name
+        - type: QList<Entity>
+          name: entities
+          ordered: true
+        - type: bool
+          name: validator
+        - type: bool
+          name: undo
+        - type: CustomDTO
+          name: dtoIn
+          strong: true
+        - type: CustomDTO
+          name: dtoOut
+          strong: true
+    
+    - name: DTOComponent
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: commonCMakeFolderPath
+
+    - name: CQRSComponent
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: commonCMakeFolderPath
+
+    - name: ContractsComponent
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: invertedAppDomain
+        - type: QString
+          name: folderPath
+
+    - name: PresenterComponent
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: folderPath
+        - type: bool
+          name: createUndoAndRedoSingles
+        - type: QList<PresenterSingle>
+          name: singles
+          ordered: true
+          strong: true
+        - type: QList<PresenterListModel>
+          name: listModels
+          ordered: true
+          strong: true
+
+    - name: PresenterSingle
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: name
+        - type: Entity
+          name: entity
+        - type: bool
+          name: readOnly
+
+    - name: PresenterListModel
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: name
+        - type: Entity
+          name: entity
+        - type: EntityField
+          name: displayedField
+        - type: Entity
+          name: inRelationOf
+        - type: EntityField
+          name: relationFieldName
+        - type: bool
+          name: readOnly
+
+    - name: FrontEndComponent
+      parent: CommonParent
+      fields:
+        - type: QString
+          name: frontName
+        - type: QString
+          name: folderPath
+
+    
+
 
 repositories:
   list:
@@ -91,6 +361,44 @@ repositories:
       - entity_name: EntityComponent
         lazy_loaders: true
       - entity_name: Entity
+        lazy_loaders: true
+      - entity_name: EntityField
+        lazy_loaders: true
+      - entity_name: EntityParent
+        lazy_loaders: true
+      - entity_name: RepositoryComponent
+        lazy_loaders: true
+      - entity_name: Repository
+        lazy_loaders: true
+      - entity_name: InteractorComponent
+        lazy_loaders: true
+      - entity_name: ApplicationComponent
+        lazy_loaders: true
+      - entity_name: ApplicationFeature
+        lazy_loaders: true
+      - entity_name: CRUD
+        lazy_loaders: true
+      - entity_name: CustomCommand
+        lazy_loaders: true
+      - entity_name: CustomDTO
+        lazy_loaders: true
+      - entity_name: CustomDTOField
+        lazy_loaders: true
+      - entity_name: CustomQuery
+        lazy_loaders: true
+      - entity_name: DTOComponent
+        lazy_loaders: true
+      - entity_name: CQRSComponent
+        lazy_loaders: true
+      - entity_name: ContractsComponent 
+        lazy_loaders: true
+      - entity_name: PresenterComponent
+        lazy_loaders: true
+      - entity_name: PresenterSingle
+        lazy_loaders: true
+      - entity_name: PresenterListModel
+        lazy_loaders: true
+      - entity_name: FrontEndComponent
         lazy_loaders: true
   repository_folder_path: src/core/persistence/repository/
   base_folder_path: src/core/persistence/ 
@@ -112,6 +420,7 @@ application:
         entity_mappable_with: Root
         get:
           enabled: true
+
     - name: RecentProject
       DTO:
         dto_identical_to_entity:
@@ -126,6 +435,7 @@ application:
           enabled: true
         remove: 
           enabled: true
+
     - name: Project
       DTO:
         dto_identical_to_entity:
@@ -194,6 +504,7 @@ application:
               enabled: false
             out:
               enabled: false
+
     - name: GlobalComponent
       DTO:
         dto_identical_to_entity:
@@ -206,6 +517,7 @@ application:
           enabled: true
         update: 
           enabled: true
+
     - name: EntityComponent
       DTO:
         dto_identical_to_entity:
@@ -220,6 +532,7 @@ application:
           enabled: true
         update: 
           enabled: true
+
     - name: Entity
       DTO:
         dto_identical_to_entity:
@@ -230,9 +543,360 @@ application:
         entity_mappable_with: Entity
         get:
           enabled: true
+        get_with_details:
+          enabled: true
         update: 
           enabled: true
         create: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: EntityField
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: EntityField
+      CRUD:
+        enabled: true       
+        entity_mappable_with: EntityField
+        get:
+          enabled: true
+        update: 
+          enabled: true
+        create: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: EntityParent
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: EntityParent
+      CRUD:
+        enabled: true       
+        entity_mappable_with: EntityParent
+        get:
+          enabled: true
+        update: 
+          enabled: true
+        create: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: RepositoryComponent
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: RepositoryComponent
+      CRUD:
+        enabled: true       
+        entity_mappable_with: RepositoryComponent
+        get:
+          enabled: true
+        get_with_details:
+          enabled: true
+        update: 
+          enabled: true
+        create: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: Repository
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: Repository
+      CRUD:
+        enabled: true       
+        entity_mappable_with: Repository
+        get:
+          enabled: true
+        get_all:
+          enabled: true
+        get_with_details:
+          enabled: true
+        update: 
+          enabled: true
+        create: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: InteractorComponent
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: InteractorComponent
+      CRUD:
+        enabled: true       
+        entity_mappable_with: InteractorComponent
+        get:
+          enabled: true
+        update: 
+          enabled: true
+        create: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: ApplicationComponent
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: ApplicationComponent
+      CRUD:
+        enabled: true       
+        entity_mappable_with: ApplicationComponent
+        get:
+          enabled: true
+        get_with_details:
+          enabled: true
+        update: 
+          enabled: true
+        create: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: ApplicationFeature
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: ApplicationFeature
+      CRUD:
+        enabled: true       
+        entity_mappable_with: ApplicationFeature
+        get:
+          enabled: true
+        get_with_details:
+          enabled: true
+        update: 
+          enabled: true
+        create: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: CRUD
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: CRUD
+      CRUD:
+        enabled: true       
+        entity_mappable_with: CRUD
+        get:
+          enabled: true
+        get_with_details:
+          enabled: true
+        create: 
+          enabled: true
+        update: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: CustomCommand
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: CustomCommand
+      CRUD:
+        enabled: true       
+        entity_mappable_with: CustomCommand
+        get:
+          enabled: true
+        get_with_details:
+          enabled: true
+        create: 
+          enabled: true
+        update: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: CustomDTO
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: CustomDTO
+      CRUD:
+        enabled: true       
+        entity_mappable_with: CustomDTO
+        get:
+          enabled: true
+        get_with_details:
+          enabled: true
+        create: 
+          enabled: true
+        update: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: CustomDTOField
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: CustomDTOField
+      CRUD:
+        enabled: true       
+        entity_mappable_with: CustomDTOField
+        get:
+          enabled: true
+        create: 
+          enabled: true
+        update: 
+          enabled: true
+        remove:
+          enabled: true
+          
+    - name: CustomQuery
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: CustomQuery
+      CRUD:
+        enabled: true       
+        entity_mappable_with: CustomQuery
+        get:
+          enabled: true
+        get_with_details:
+          enabled: true
+        create: 
+          enabled: true
+        update: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: DTOComponent
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: DTOComponent
+      CRUD:
+        enabled: true       
+        entity_mappable_with: DTOComponent
+        get:
+          enabled: true
+        create: 
+          enabled: true
+        update: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: CQRSComponent
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: CQRSComponent
+      CRUD:
+        enabled: true       
+        entity_mappable_with: CQRSComponent
+        get:
+          enabled: true
+        create: 
+          enabled: true
+        update: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: ContractsComponent
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: ContractsComponent
+      CRUD:
+        enabled: true       
+        entity_mappable_with: ContractsComponent
+        get:
+          enabled: true
+        create: 
+          enabled: true
+        update: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: PresenterComponent
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: PresenterComponent
+      CRUD:
+        enabled: true       
+        entity_mappable_with: PresenterComponent
+        get:
+          enabled: true
+        get_with_details:
+          enabled: true
+        create: 
+          enabled: true
+        update: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: PresenterSingle
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: PresenterSingle
+      CRUD:
+        enabled: true       
+        entity_mappable_with: PresenterSingle
+        get:
+          enabled: true
+        get_with_details:
+          enabled: true
+        create: 
+          enabled: true
+        update: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: PresenterListModel
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: PresenterListModel
+      CRUD:
+        enabled: true       
+        entity_mappable_with: PresenterListModel
+        get:
+          enabled: true
+        get_with_details:
+          enabled: true
+        create: 
+          enabled: true
+        update: 
+          enabled: true
+        remove:
+          enabled: true
+
+    - name: FrontEndComponent
+      DTO:
+        dto_identical_to_entity:
+          enabled: true
+          entity_mappable_with: FrontEndComponent
+      CRUD:
+        enabled: true       
+        entity_mappable_with: FrontEndComponent
+        get:
+          enabled: true
+        get_all:
+          enabled: true
+        create: 
+          enabled: true
+        update: 
           enabled: true
         remove:
           enabled: true
@@ -256,6 +920,11 @@ presenter:
       read_only: true
     - name: auto
       entity: GlobalComponent
+    - name: auto
+      entity: Entity
+    - name: auto
+      entity: EntityField
+    
   list_models:
     - name: auto
       entity: RecentProject

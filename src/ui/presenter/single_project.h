@@ -22,6 +22,7 @@ class QLEANY_EDITOR_PRESENTER_EXPORT SingleProject : public QObject
     Q_PROPERTY(QDateTime creationDate READ creationDate NOTIFY creationDateChanged FINAL)
     Q_PROPERTY(QDateTime updateDate READ updateDate NOTIFY updateDateChanged FINAL)
     Q_PROPERTY(QString fileName READ fileName NOTIFY fileNameChanged FINAL)
+    Q_PROPERTY(QString rootPath READ rootPath NOTIFY rootPathChanged FINAL)
 
 public:
     explicit SingleProject(QObject *parent = nullptr);
@@ -38,6 +39,8 @@ public:
 
     QString fileName() const;
 
+    QString rootPath() const;
+
 Q_SIGNALS:
 
     void idChanged();
@@ -46,6 +49,7 @@ Q_SIGNALS:
     void creationDateChanged();
     void updateDateChanged();
     void fileNameChanged();
+    void rootPathChanged();
 
 private:
     int m_id;
@@ -54,6 +58,7 @@ private:
     QDateTime m_creationDate;
     QDateTime m_updateDate;
     QString m_fileName;
+    QString m_rootPath;
 };
 
 } // namespace QleanyEditor::Presenter

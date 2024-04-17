@@ -3,3 +3,5 @@
 Module Singles
 SingleProject 1.0 SingleProject.qml
 SingleGlobalComponent 1.0 SingleGlobalComponent.qml
+SingleEntity 1.0 SingleEntity.qml
+SingleEntityField 1.0 SingleEntityField.qml

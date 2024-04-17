@@ -48,6 +48,7 @@ public:
         bool projectSet = false;
         bool projectLoaded = false;
 
+        // Getters for the fields' metadata. Normal fields are always set, but lazy-loaded fields may not be
         bool getSet(const QString &fieldName) const
         {
             if (fieldName == "content"_L1) {
@@ -62,9 +63,11 @@ public:
             if (fieldName == "project"_L1) {
                 return projectSet;
             }
+            // If the field is not found, we delegate to the parent class
             return m_entity->CommonParent::metaData().getSet(fieldName);
         }
 
+        // Getters for the fields' metadata. Normal fields are always set, but lazy-loaded fields may not be
         bool getLoaded(const QString &fieldName) const
         {
             if (fieldName == "content"_L1) {
@@ -79,6 +82,7 @@ public:
             if (fieldName == "project"_L1) {
                 return projectLoaded;
             }
+            // If the field is not found, we delegate to the parent class
             return m_entity->CommonParent::metaData().getLoaded(fieldName);
         }
 

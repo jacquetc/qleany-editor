@@ -9,8 +9,10 @@ set(SRC
 
     
     entity/entity_dto.h
+    entity/entity_with_details_dto.h
     entity/create_entity_dto.h
     entity/update_entity_dto.h
+    entity/entity_relation_dto.h
 )
 qt_add_library(${LIBRARY_NAME} STATIC ${SRC})
 
@@ -22,7 +24,11 @@ set_target_properties(${LIBRARY_NAME} PROPERTIES
                     
 set_target_properties(${LIBRARY_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
+add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-entity-field)
+add_dependencies(${LIBRARY_NAME} qleany-editor-contracts-dto-entity-parent)
 
+target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-entity-field)
+target_link_libraries(${LIBRARY_NAME} PUBLIC qleany-editor-contracts-dto-entity-parent)
 
 
 target_link_libraries(${LIBRARY_NAME}

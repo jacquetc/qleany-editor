@@ -10,6 +10,7 @@
 #include "entity/commands/update_entity_command.h"
 #include "entity/commands/update_entity_command_handler.h"
 #include "entity/queries/get_entity_query_handler.h"
+#include "entity/queries/get_entity_with_details_query_handler.h"
 #include "qleany/tools/undo_redo/alter_command.h"
 #include "qleany/tools/undo_redo/query_command.h"
 #include <QCoroSignal>
@@ -67,6 +68,37 @@ QCoro::Task<EntityDTO> EntityInteractor::get(int id) const
     if (!optional_result.has_value()) {
         // for now, I insert one invalid item to the list to show that there was an error
         co_return EntityDTO();
+    }
+
+    co_return optional_result.value();
+}
+
+QCoro::Task<EntityWithDetailsDTO> EntityInteractor::getWithDetails(int id) const
+{
+    auto queryCommand = new QueryCommand("getWithDetails"_L1);
+
+    queryCommand->setQueryFunction([this, id](QPromise<Result<void>> &progressPromise) {
+        GetEntityQuery query;
+        query.id = id;
+        auto interface = static_cast<InterfaceEntityRepository *>(m_repositoryProvider->repository("Entity"));
+        GetEntityWithDetailsQueryHandler handler(interface);
+        auto result = handler.handle(progressPromise, query);
+
+        if (result.isSuccess()) {
+            Q_EMIT m_eventDispatcher->entity()->getWithDetailsReplied(result.value());
+        }
+        return Result<void>(result.error());
+    });
+
+    m_undo_redo_system->push(queryCommand, "entity"_L1);
+
+    // async wait for result signal
+    const std::optional<EntityWithDetailsDTO> optional_result =
+        co_await qCoro(m_eventDispatcher.get()->entity(), &EntitySignals::getWithDetailsReplied, std::chrono::milliseconds(1000));
+
+    if (!optional_result.has_value()) {
+        // for now, I insert one invalid item to the list to show that there was an error
+        co_return EntityWithDetailsDTO();
     }
 
     co_return optional_result.value();

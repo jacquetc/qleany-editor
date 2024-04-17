@@ -24,6 +24,8 @@ set(SRC
     entity/commands/update_entity_command_handler.h
     entity/queries/get_entity_query_handler.cpp
     entity/queries/get_entity_query_handler.h
+    entity/queries/get_entity_with_details_query_handler.cpp
+    entity/queries/get_entity_with_details_query_handler.h
 )
 qt_add_library(${LIBRARY_NAME} ${LIB_TYPE} ${SRC})
 

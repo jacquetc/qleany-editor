@@ -4,7 +4,11 @@
 
 #include "qleany_editor_interactor_export.h"
 
+#include "entity/entity_with_details_dto.h"
+
 #include "entity/entity_dto.h"
+
+#include "entity/entity_relation_dto.h"
 
 #include <QObject>
 
@@ -29,5 +33,9 @@ Q_SIGNALS:
     void updated(EntityDTO dto);
     void allRelationsInvalidated(int id);
     void getReplied(EntityDTO dto);
+    void getWithDetailsReplied(EntityWithDetailsDTO dto);
+
+    void relationInserted(EntityRelationDTO dto);
+    void relationRemoved(EntityRelationDTO dto);
 };
 } // namespace QleanyEditor::Interactor

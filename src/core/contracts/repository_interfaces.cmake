@@ -7,4 +7,23 @@ set(REPOSITORY_LIST
     repository/interface_global_component_repository.h
     repository/interface_entity_component_repository.h
     repository/interface_entity_repository.h
+    repository/interface_entity_field_repository.h
+    repository/interface_entity_parent_repository.h
+    repository/interface_repository_component_repository.h
+    repository/interface_repository_repository.h
+    repository/interface_interactor_component_repository.h
+    repository/interface_application_component_repository.h
+    repository/interface_application_feature_repository.h
+    repository/interface_c_r_u_d_repository.h
+    repository/interface_custom_command_repository.h
+    repository/interface_custom_d_t_o_repository.h
+    repository/interface_custom_d_t_o_field_repository.h
+    repository/interface_custom_query_repository.h
+    repository/interface_d_t_o_component_repository.h
+    repository/interface_c_q_r_s_component_repository.h
+    repository/interface_contracts_component_repository.h
+    repository/interface_presenter_component_repository.h
+    repository/interface_presenter_single_repository.h
+    repository/interface_presenter_list_model_repository.h
+    repository/interface_front_end_component_repository.h
 )

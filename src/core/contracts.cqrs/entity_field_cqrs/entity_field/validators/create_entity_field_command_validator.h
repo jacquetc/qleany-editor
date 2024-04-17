@@ -1,0 +1,37 @@
+// This file was generated automatically by Qleany's generator, edit at your own risk!
+// If you do, be careful to not overwrite it when you run the generator again.
+#pragma once
+
+#include "entity_field/create_entity_field_dto.h"
+
+#include "repository/interface_entity_field_repository.h"
+
+#include <qleany/common/result.h>
+
+using namespace Qleany;
+
+using namespace QleanyEditor::Contracts::Repository;
+
+using namespace QleanyEditor::Contracts::DTO::EntityField;
+
+namespace QleanyEditor::Contracts::CQRS::EntityField::Validators
+{
+class CreateEntityFieldCommandValidator
+{
+public:
+    CreateEntityFieldCommandValidator(InterfaceEntityFieldRepository *entityFieldRepository)
+        : m_entityFieldRepository(entityFieldRepository)
+    {
+    }
+
+    Result<void> validate(const CreateEntityFieldDTO &dto) const
+
+    {
+        // Return that is Ok :
+        return Result<void>();
+    }
+
+private:
+    InterfaceEntityFieldRepository *m_entityFieldRepository;
+};
+} // namespace QleanyEditor::Contracts::CQRS::EntityField::Validators

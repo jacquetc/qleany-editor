@@ -5,6 +5,10 @@ set(PRESENTER_LIST
     single_project.cpp
     single_global_component.h
     single_global_component.cpp
+    single_entity.h
+    single_entity.cpp
+    single_entity_field.h
+    single_entity_field.cpp
     recent_project_list_model.h
     recent_project_list_model.cpp
     entity_list_model_from_entity_component_entities.h

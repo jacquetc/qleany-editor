@@ -8,4 +8,23 @@ set(ENTITY_LIST
     global_component.h
     entity_component.h
     entity.h
+    entity_parent.h
+    entity_field.h
+    repository_component.h
+    repository.h
+    interactor_component.h
+    application_component.h
+    application_feature.h
+    c_r_u_d.h
+    custom_command.h
+    custom_d_t_o.h
+    custom_d_t_o_field.h
+    custom_query.h
+    d_t_o_component.h
+    c_q_r_s_component.h
+    contracts_component.h
+    presenter_component.h
+    presenter_single.h
+    presenter_list_model.h
+    front_end_component.h
 )

@@ -23,7 +23,7 @@ public:
     {
     }
 
-    virtual Result<QleanyEditor::Entities::EntityComponent> update(QleanyEditor::Entities::EntityComponent &&entity) = 0;
+    virtual Result<QleanyEditor::Entities::EntityComponent> update(QleanyEditor::Entities::EntityComponent &&entity) override = 0;
     virtual Result<QleanyEditor::Entities::EntityComponent> getWithDetails(int entityId) = 0;
 
     virtual QleanyEditor::Entities::EntityComponent::EntitiesLoader fetchEntitiesLoader() = 0;

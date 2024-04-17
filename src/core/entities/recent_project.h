@@ -30,8 +30,10 @@ public:
         MetaData(RecentProject *entity, const MetaData &other)
             : m_entity(entity)
         {
+            Q_UNUSED(other);
         }
 
+        // Getters for the fields' metadata. Normal fields are always set, but lazy-loaded fields may not be
         bool getSet(const QString &fieldName) const
         {
             if (fieldName == "fileName"_L1) {
@@ -40,9 +42,11 @@ public:
             if (fieldName == "rootPath"_L1) {
                 return true;
             }
+            // If the field is not found, we delegate to the parent class
             return m_entity->CommonParent::metaData().getSet(fieldName);
         }
 
+        // Getters for the fields' metadata. Normal fields are always set, but lazy-loaded fields may not be
         bool getLoaded(const QString &fieldName) const
         {
             if (fieldName == "fileName"_L1) {
@@ -51,6 +55,7 @@ public:
             if (fieldName == "rootPath"_L1) {
                 return true;
             }
+            // If the field is not found, we delegate to the parent class
             return m_entity->CommonParent::metaData().getLoaded(fieldName);
         }
 
@@ -60,9 +65,9 @@ public:
 
     RecentProject()
         : CommonParent()
+        , m_metaData(this)
         , m_fileName(QString())
         , m_rootPath(QString())
-        , m_metaData(this)
     {
     }
 
@@ -77,9 +82,9 @@ public:
                   const QString &fileName,
                   const QString &rootPath)
         : CommonParent(id, uuid, creationDate, updateDate)
+        , m_metaData(this)
         , m_fileName(fileName)
         , m_rootPath(rootPath)
-        , m_metaData(this)
     {
     }
 

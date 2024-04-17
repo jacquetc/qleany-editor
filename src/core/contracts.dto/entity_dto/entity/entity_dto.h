@@ -20,6 +20,7 @@ class EntityDTO
     Q_PROPERTY(QDateTime creationDate READ creationDate WRITE setCreationDate)
     Q_PROPERTY(QDateTime updateDate READ updateDate WRITE setUpdateDate)
     Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(bool onlyForHeritage READ onlyForHeritage WRITE setOnlyForHeritage)
 
 public:
     struct MetaData {
@@ -28,6 +29,7 @@ public:
         bool creationDateSet = false;
         bool updateDateSet = false;
         bool nameSet = false;
+        bool onlyForHeritageSet = false;
         bool getSet(const QString &fieldName) const
         {
             if (fieldName == "id"_L1) {
@@ -45,6 +47,9 @@ public:
             if (fieldName == "name"_L1) {
                 return nameSet;
             }
+            if (fieldName == "onlyForHeritage"_L1) {
+                return onlyForHeritageSet;
+            }
             return false;
         }
 
@@ -60,6 +65,7 @@ public:
         , m_creationDate(QDateTime())
         , m_updateDate(QDateTime())
         , m_name(QString())
+        , m_onlyForHeritage(false)
     {
     }
 
@@ -67,12 +73,13 @@ public:
     {
     }
 
-    EntityDTO(int id, const QUuid &uuid, const QDateTime &creationDate, const QDateTime &updateDate, const QString &name)
+    EntityDTO(int id, const QUuid &uuid, const QDateTime &creationDate, const QDateTime &updateDate, const QString &name, bool onlyForHeritage)
         : m_id(id)
         , m_uuid(uuid)
         , m_creationDate(creationDate)
         , m_updateDate(updateDate)
         , m_name(name)
+        , m_onlyForHeritage(onlyForHeritage)
     {
     }
 
@@ -83,6 +90,7 @@ public:
         , m_creationDate(other.m_creationDate)
         , m_updateDate(other.m_updateDate)
         , m_name(other.m_name)
+        , m_onlyForHeritage(other.m_onlyForHeritage)
     {
     }
 
@@ -110,6 +118,7 @@ public:
             m_creationDate = other.m_creationDate;
             m_updateDate = other.m_updateDate;
             m_name = other.m_name;
+            m_onlyForHeritage = other.m_onlyForHeritage;
         }
         return *this;
     }
@@ -123,6 +132,7 @@ public:
             m_creationDate = other.m_creationDate;
             m_updateDate = other.m_updateDate;
             m_name = other.m_name;
+            m_onlyForHeritage = other.m_onlyForHeritage;
         }
         return *this;
     }
@@ -149,6 +159,10 @@ public:
             if (other.m_metaData.nameSet) {
                 m_name = other.m_name;
                 m_metaData.nameSet = true;
+            }
+            if (other.m_metaData.onlyForHeritageSet) {
+                m_onlyForHeritage = other.m_onlyForHeritage;
+                m_metaData.onlyForHeritageSet = true;
             }
         }
         return *this;
@@ -229,6 +243,19 @@ public:
         m_metaData.nameSet = true;
     }
 
+    // ------ onlyForHeritage : -----
+
+    bool onlyForHeritage() const
+    {
+        return m_onlyForHeritage;
+    }
+
+    void setOnlyForHeritage(bool onlyForHeritage)
+    {
+        m_onlyForHeritage = onlyForHeritage;
+        m_metaData.onlyForHeritageSet = true;
+    }
+
     MetaData metaData() const
     {
         return m_metaData;
@@ -242,12 +269,13 @@ private:
     QDateTime m_creationDate;
     QDateTime m_updateDate;
     QString m_name;
+    bool m_onlyForHeritage;
 };
 
 inline bool operator==(const EntityDTO &lhs, const EntityDTO &rhs)
 {
     return lhs.m_id == rhs.m_id && lhs.m_uuid == rhs.m_uuid && lhs.m_creationDate == rhs.m_creationDate && lhs.m_updateDate == rhs.m_updateDate
-        && lhs.m_name == rhs.m_name;
+        && lhs.m_name == rhs.m_name && lhs.m_onlyForHeritage == rhs.m_onlyForHeritage;
 }
 
 inline uint qHash(const EntityDTO &dto, uint seed = 0) noexcept
@@ -260,6 +288,7 @@ inline uint qHash(const EntityDTO &dto, uint seed = 0) noexcept
     hash ^= ::qHash(dto.m_creationDate, seed);
     hash ^= ::qHash(dto.m_updateDate, seed);
     hash ^= ::qHash(dto.m_name, seed);
+    hash ^= ::qHash(dto.m_onlyForHeritage, seed);
 
     return hash;
 }

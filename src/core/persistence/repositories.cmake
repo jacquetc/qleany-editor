@@ -13,4 +13,42 @@ set(REPOSITORY_LIST
     repository/entity_component_repository.cpp
     repository/entity_repository.h
     repository/entity_repository.cpp
+    repository/entity_field_repository.h
+    repository/entity_field_repository.cpp
+    repository/entity_parent_repository.h
+    repository/entity_parent_repository.cpp
+    repository/repository_component_repository.h
+    repository/repository_component_repository.cpp
+    repository/repository_repository.h
+    repository/repository_repository.cpp
+    repository/interactor_component_repository.h
+    repository/interactor_component_repository.cpp
+    repository/application_component_repository.h
+    repository/application_component_repository.cpp
+    repository/application_feature_repository.h
+    repository/application_feature_repository.cpp
+    repository/c_r_u_d_repository.h
+    repository/c_r_u_d_repository.cpp
+    repository/custom_command_repository.h
+    repository/custom_command_repository.cpp
+    repository/custom_d_t_o_repository.h
+    repository/custom_d_t_o_repository.cpp
+    repository/custom_d_t_o_field_repository.h
+    repository/custom_d_t_o_field_repository.cpp
+    repository/custom_query_repository.h
+    repository/custom_query_repository.cpp
+    repository/d_t_o_component_repository.h
+    repository/d_t_o_component_repository.cpp
+    repository/c_q_r_s_component_repository.h
+    repository/c_q_r_s_component_repository.cpp
+    repository/contracts_component_repository.h
+    repository/contracts_component_repository.cpp
+    repository/presenter_component_repository.h
+    repository/presenter_component_repository.cpp
+    repository/presenter_single_repository.h
+    repository/presenter_single_repository.cpp
+    repository/presenter_list_model_repository.h
+    repository/presenter_list_model_repository.cpp
+    repository/front_end_component_repository.h
+    repository/front_end_component_repository.cpp
 )

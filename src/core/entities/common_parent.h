@@ -33,8 +33,10 @@ public:
         MetaData(CommonParent *entity, const MetaData &other)
             : m_entity(entity)
         {
+            Q_UNUSED(other);
         }
 
+        // Getters for the fields' metadata. Normal fields are always set, but lazy-loaded fields may not be
         bool getSet(const QString &fieldName) const
         {
             if (fieldName == "uuid"_L1) {
@@ -46,9 +48,11 @@ public:
             if (fieldName == "updateDate"_L1) {
                 return true;
             }
+            // If the field is not found, we delegate to the parent class
             return m_entity->EntityBase::metaData().getSet(fieldName);
         }
 
+        // Getters for the fields' metadata. Normal fields are always set, but lazy-loaded fields may not be
         bool getLoaded(const QString &fieldName) const
         {
             if (fieldName == "uuid"_L1) {
@@ -60,6 +64,7 @@ public:
             if (fieldName == "updateDate"_L1) {
                 return true;
             }
+            // If the field is not found, we delegate to the parent class
             return m_entity->EntityBase::metaData().getLoaded(fieldName);
         }
 
@@ -69,10 +74,10 @@ public:
 
     CommonParent()
         : EntityBase()
+        , m_metaData(this)
         , m_uuid(QUuid())
         , m_creationDate(QDateTime())
         , m_updateDate(QDateTime())
-        , m_metaData(this)
     {
     }
 
@@ -82,10 +87,10 @@ public:
 
     CommonParent(const int &id, const QUuid &uuid, const QDateTime &creationDate, const QDateTime &updateDate)
         : EntityBase(id)
+        , m_metaData(this)
         , m_uuid(uuid)
         , m_creationDate(creationDate)
         , m_updateDate(updateDate)
-        , m_metaData(this)
     {
     }
 

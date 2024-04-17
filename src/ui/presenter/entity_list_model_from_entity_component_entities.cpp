@@ -183,6 +183,8 @@ QVariant EntityListModelFromEntityComponentEntities::data(const QModelIndex &ind
         return entity.updateDate();
     else if (role == NameRole)
         return entity.name();
+    else if (role == OnlyForHeritageRole)
+        return entity.onlyForHeritage();
 
     return QVariant();
 }
@@ -318,6 +320,28 @@ bool EntityListModelFromEntityComponentEntities::setData(const QModelIndex &inde
         });
 
         return true;
+    } else if (role == OnlyForHeritageRole) {
+        if (value.canConvert<bool>() == false) {
+            qCritical() << "Cannot convert value to bool";
+            return false;
+        }
+
+        const EntityDTO &entity = m_entityList[row];
+
+        UpdateEntityDTO dto;
+        dto.setId(entity.id());
+        dto.setOnlyForHeritage(value.value<bool>());
+
+        Entity::EntityInteractor::instance()->update(dto).then([this, index, role](auto &&result) {
+            if (result.isInvalid()) {
+                qCritical() << Q_FUNC_INFO << "Invalid entityComponent";
+                return false;
+            }
+            Q_EMIT dataChanged(index, index, {role});
+            return true;
+        });
+
+        return true;
     }
 
     return false;
@@ -392,5 +416,6 @@ QHash<int, QByteArray> EntityListModelFromEntityComponentEntities::roleNames() c
     names[CreationDateRole] = "creationDate";
     names[UpdateDateRole] = "updateDate";
     names[NameRole] = "name";
+    names[OnlyForHeritageRole] = "onlyForHeritage";
     return names;
 }

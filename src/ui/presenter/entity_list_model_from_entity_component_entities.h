@@ -22,7 +22,8 @@ public:
         UuidRole = Qt::UserRole + 1,
         CreationDateRole = Qt::UserRole + 2,
         UpdateDateRole = Qt::UserRole + 3,
-        NameRole = Qt::UserRole + 4
+        NameRole = Qt::UserRole + 4,
+        OnlyForHeritageRole = Qt::UserRole + 5
     };
     Q_ENUM(Roles)
 

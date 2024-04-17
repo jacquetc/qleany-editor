@@ -12,7 +12,34 @@ namespace QleanyEditor::Entities::Entities
 {
 Q_NAMESPACE
 
-enum EntityEnum { CommonParent, Root, RecentProject, Project, GlobalComponent, EntityComponent, Entity };
+enum EntityEnum {
+    CommonParent,
+    Root,
+    RecentProject,
+    Project,
+    GlobalComponent,
+    EntityComponent,
+    Entity,
+    EntityParent,
+    EntityField,
+    RepositoryComponent,
+    Repository,
+    InteractorComponent,
+    ApplicationComponent,
+    ApplicationFeature,
+    CRUD,
+    CustomCommand,
+    CustomDTO,
+    CustomDTOField,
+    CustomQuery,
+    DTOComponent,
+    CQRSComponent,
+    ContractsComponent,
+    PresenterComponent,
+    PresenterSingle,
+    PresenterListModel,
+    FrontEndComponent
+};
 Q_ENUM_NS(EntityEnum);
 
 } // namespace QleanyEditor::Entities::Entities

@@ -38,6 +38,7 @@ public:
         bool entitiesSet = false;
         bool entitiesLoaded = false;
 
+        // Getters for the fields' metadata. Normal fields are always set, but lazy-loaded fields may not be
         bool getSet(const QString &fieldName) const
         {
             if (fieldName == "relativeFolderPath"_L1) {
@@ -46,9 +47,11 @@ public:
             if (fieldName == "entities"_L1) {
                 return entitiesSet;
             }
+            // If the field is not found, we delegate to the parent class
             return m_entity->CommonParent::metaData().getSet(fieldName);
         }
 
+        // Getters for the fields' metadata. Normal fields are always set, but lazy-loaded fields may not be
         bool getLoaded(const QString &fieldName) const
         {
             if (fieldName == "relativeFolderPath"_L1) {
@@ -57,6 +60,7 @@ public:
             if (fieldName == "entities"_L1) {
                 return entitiesLoaded;
             }
+            // If the field is not found, we delegate to the parent class
             return m_entity->CommonParent::metaData().getLoaded(fieldName);
         }
 
@@ -66,8 +70,8 @@ public:
 
     EntityComponent()
         : CommonParent()
-        , m_relativeFolderPath(QString())
         , m_metaData(this)
+        , m_relativeFolderPath(QString())
     {
     }
 
@@ -82,9 +86,9 @@ public:
                     const QString &relativeFolderPath,
                     const QList<Entity> &entities)
         : CommonParent(id, uuid, creationDate, updateDate)
+        , m_metaData(this)
         , m_relativeFolderPath(relativeFolderPath)
         , m_entities(entities)
-        , m_metaData(this)
     {
     }
 
@@ -195,7 +199,16 @@ inline Qleany::Entities::EntitySchema EntityComponent::schema = {QleanyEditor::E
                                                                  "EntityComponent"_L1,
 
                                                                  // relationships:
-                                                                 {{QleanyEditor::Entities::Entities::EntityEnum::EntityComponent,
+                                                                 {{QleanyEditor::Entities::Entities::EntityEnum::Project,
+                                                                   "Project"_L1,
+                                                                   QleanyEditor::Entities::Entities::EntityEnum::EntityComponent,
+                                                                   "EntityComponent"_L1,
+                                                                   "entityComponent"_L1,
+                                                                   RelationshipType::OneToOne,
+                                                                   RelationshipStrength::Strong,
+                                                                   RelationshipCardinality::One,
+                                                                   RelationshipDirection::Backward},
+                                                                  {QleanyEditor::Entities::Entities::EntityEnum::EntityComponent,
                                                                    "EntityComponent"_L1,
                                                                    QleanyEditor::Entities::Entities::EntityEnum::Entity,
                                                                    "Entity"_L1,

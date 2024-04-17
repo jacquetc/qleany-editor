@@ -14,6 +14,8 @@ qt6_add_qml_module(${PLUGIN_NAME}
     
     foreign_single_project.h
     foreign_single_global_component.h
+    foreign_single_entity.h
+    foreign_single_entity_field.h
 
 )
 

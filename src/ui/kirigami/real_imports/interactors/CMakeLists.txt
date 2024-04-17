@@ -18,6 +18,25 @@ qt6_add_qml_module(${PLUGIN_NAME}
     foreign_global_component_interactor.h
     foreign_entity_component_interactor.h
     foreign_entity_interactor.h
+    foreign_entity_field_interactor.h
+    foreign_entity_parent_interactor.h
+    foreign_repository_component_interactor.h
+    foreign_repository_interactor.h
+    foreign_interactor_component_interactor.h
+    foreign_application_component_interactor.h
+    foreign_application_feature_interactor.h
+    foreign_c_r_u_d_interactor.h
+    foreign_custom_command_interactor.h
+    foreign_custom_d_t_o_interactor.h
+    foreign_custom_d_t_o_field_interactor.h
+    foreign_custom_query_interactor.h
+    foreign_d_t_o_component_interactor.h
+    foreign_c_q_r_s_component_interactor.h
+    foreign_contracts_component_interactor.h
+    foreign_presenter_component_interactor.h
+    foreign_presenter_single_interactor.h
+    foreign_presenter_list_model_interactor.h
+    foreign_front_end_component_interactor.h
     foreign_event_dispatcher.h
 
 )
